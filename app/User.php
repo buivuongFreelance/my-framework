@@ -31,4 +31,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function rules(){
+        return [
+            'name' => 'required|min:4',
+        ];
+    }
+
+    public function client(){
+        return $this->hasOne('App\Client', 'user_uid', 'uid');
+    }
 }

@@ -1,0 +1,1 @@
+export const SUBMIT_PATIENT_REGISTRATION = 'submit_patient_registration';

@@ -2,20 +2,22 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as PatientRegistrationFormActions from '../common/actions/FormActions';
+import {PatientRegistrationActions} from '../user';
+import {GetFormValues} from '../common/helpers';
 
 const fields = ['name', 'email', 'password', 'rePassword'];
 
 class PatientRegistration extends Component{
 	_onValidation(field, value){
-		let error = {message: '', field: field};
+		let errors = [];
 		switch(field){
 			case 'name':
 				if(is.empty(value))
-					error.message = 'Name Required';
+					errors.push({error: 'Required', field: field});
 				else if(value.length < 4)
-					error.message = 'Password Must At Least 4 Characters.';
+					errors.push({error: 'Must Be Larger Than 4 Characters', field: field});
 				break;
-			case 'email':
+			/*case 'email':
 				if(is.empty(value))
 					error.message = 'Email Address Required';
 				else if(!is.email(value))
@@ -33,7 +35,6 @@ class PatientRegistration extends Component{
 					error.field = 'rePassword';
 				}
 				break;
-				
 			case 'rePassword':
 				if(is.empty(value))
 					error.message = 'Re-Typed Password Required';
@@ -41,17 +42,17 @@ class PatientRegistration extends Component{
 					error.message = 'Must Be The Same With Password';
 				else{
 					error.message = '';
-					error.field = 'password';	
+					error.field = 'password';
 				}
-				break;
+				break;*/
 		}
-		return error;
+		return errors;
 	}
 	_onChangeField(field, event){
 		const value = event.target.value;
-		const error = this._onValidation(field, value);
+		const errors = this._onValidation(field, value);
 		this.props.onChangeField(field, value);
-		this.props.onValidationField(field, error, fields, this.props.patientRegistrationForm);
+		this.props.onValidationField(field, errors, 'patientRegistrationForm');
 	}
 	_onFocusField(){
 		const {touched} = this.props.patientRegistrationForm;
@@ -60,7 +61,7 @@ class PatientRegistration extends Component{
 	}
 	_onSubmit(event){
 		event.preventDefault();
-		console.log(this.props.patientRegistrationForm);
+		this.props.submitPatientRegistration(GetFormValues(this.props.patientRegistrationForm));
 	}
 	render(){
 		const {touched, submitting, name, email, password, rePassword} = this.props.patientRegistrationForm;
@@ -162,7 +163,8 @@ const mapStateToProps = ({patientRegistrationForm}) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		...PatientRegistrationFormActions
+		...PatientRegistrationFormActions,
+		...PatientRegistrationActions
 	}, dispatch);
 };
 

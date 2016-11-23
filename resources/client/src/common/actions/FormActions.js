@@ -14,8 +14,23 @@ export const onFocusField = () => {
 	};
 };
 
-export const onValidationField = (field, error, fields, form) => {
-	const valid = error.message ? false: true;
+export const onValidationField = (field, errors, reducer) => {
+	return (dispatch, getState) => {
+		let reducers = $.extend(true, {}, getState()[reducer]);
+
+		if(errors.length === 0)
+			reducers[field] = {...reducers[field], valid: true, error: ''};
+		else
+			errors.map(error => {
+				reducers[error.field] = {...reducers[error.field], valid: error.error?false:true, error: error.error};
+			});
+
+		dispatch({
+			type: ON_VALIDATION_FIELD,
+			payload: 'true'
+		});
+	};
+	/*const valid = error.message ? false: true;
 	let submitting = valid;
 	const params = {error: error.message, valid};
 
@@ -36,5 +51,5 @@ export const onValidationField = (field, error, fields, form) => {
 	return {
 		type: ON_VALIDATION_FIELD,
 		payload: {field, mainField, submitting, params}
-	};
+	};*/
 };

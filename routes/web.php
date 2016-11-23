@@ -13,10 +13,10 @@ use Illuminate\Http\Request;
 */
 Route::group(['prefix' => 'api'], function()
 {
-    //Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
     Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::post('authenticate/client/register', 'AuthenticateController@clientRegistration');
 });
 
-Route::any('{all?}', function ($url) {
+Route::get('{all?}', function ($url) {
     return view('main');
 })->where('all', '(.*)');
