@@ -39,6 +39,14 @@ class User extends Authenticatable
         return $query;
     }
 
+    public function scopeGetClientWithEmail($query, $email){
+        $query->where('email', $email)
+            ->with('client')
+            ->where('role', 'client')
+            ->first();
+        return $query;
+    }
+
     public function client(){
         return $this->hasOne('App\Client', 'user_uid', 'uid');
     }

@@ -13,10 +13,26 @@ use Hash;
 use Uuid;
 use ValidationException;
 use Validator;
-use Input;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ClientRegistration;
 
 class AuthenticateController extends Controller
 {
+    public function clientActive(Request $request, $token){
+        $user = User::where('remember_token', $token)->first();
+
+        if($user){
+            User::where('remember_token', $token)
+                ->update([
+                    'remember_token' => '',
+                    'status' => 'active'
+                ]);
+            return response()->json(['token' => 'you successfull, please login']);
+        }else{
+            return response()->json(['token' => 'you hacked']);
+        }
+    }
+
     public function clientLogin(Request $request){
         $all = $request->all();
         $validator = Validator::make($all, [
@@ -74,6 +90,7 @@ class AuthenticateController extends Controller
             $user->uid = $userUid;
             $user->name = $all['name'];
             $user->email = $all['email'];
+            $user->remember_token = Uuid::generate();
             $user->password = Hash::make($all['password']);
             $user->save();
         }catch(ValidationException $e){
@@ -98,6 +115,8 @@ class AuthenticateController extends Controller
             throw $e;
         }
         DB::commit();
+
+        Mail::to($all['email'])->send(new ClientRegistration( $all['name'], $user->remember_token ));
         return response()->json(['message'=>'success']);
     }
 }

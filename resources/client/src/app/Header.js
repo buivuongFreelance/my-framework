@@ -5,6 +5,26 @@ import {ThemeActions} from '../theme';
 
 class Header extends Component{
 	render(){
+		let renderLogout = (
+			<a className="navbar-link" onClick={this.props.themeClickClientLogout}>
+				Logout Patient
+			</a>
+		)
+		let renderLogin = (
+			<a className="navbar-link" onClick={this.props.themeClickClientView}>
+				<i className="fa fa-envelope"></i> {this.props.patientAuth.email}
+			</a>
+		)
+
+		if(!this.props.patientAuth.authenticate){
+			renderLogout = null;
+			renderLogin = (
+				<a className="navbar-link" onClick={this.props.themeClickClientLogin}>
+					Login Client
+				</a>
+			)
+		}
+
 		return (
 			<header id="layout-header">
 				<div className="main-holder">
@@ -40,10 +60,8 @@ class Header extends Component{
           								<a className="link">
           									<i className="fa fa-phone"></i> 1800-123-4567
           								</a>
-          								<a className="navbar-link" onClick={this.props.themeClickClientLogin}>
-          									Login Client
-          									{/*<i className="fa fa-envelope"></i> info@dentistry.com*/}
-          								</a>
+          								{renderLogin}
+          								{renderLogout}
           							</p>
         						</div>
 							</div>
@@ -82,10 +100,14 @@ class Header extends Component{
 	};
 };
 
+const mapStateToProps = ({patientAuth}) => {
+	return {patientAuth};
+};
+
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		...ThemeActions
 	}, dispatch);
 };
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

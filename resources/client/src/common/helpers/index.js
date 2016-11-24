@@ -1,3 +1,5 @@
+import {DEFAULT_DATE} from '../config';
+
 export const GetFormValues = (values) => {
 	let formArr = {};
 	for(let field in values){
@@ -34,4 +36,22 @@ export const GetValidationField = (field, errors, reducer, state) => {
 
 	reducers.submitting = submitting;
 	return reducers;
+};
+
+export const DisplayDate = (date) => {
+	if(date == DEFAULT_DATE){
+		return '';
+	}
+	if(is.empty(date))
+		return '';
+	if(typeof date === 'undefined')
+		return '';
+
+	date = date.split(' ')[0];
+	const dateArr = date.split('-');
+	const year = dateArr[0];
+	const month = dateArr[1];
+	const day = dateArr[2];
+
+	return day+'/'+month+'/'+year;
 };

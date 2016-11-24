@@ -10,6 +10,7 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import loggerMiddleware from '../common/middlewares/logger';
 import {DEFAULT_URL} from '../common/config';
+import {USER_PATIENT_AUTH_LOGIN} from '../user/types';
 
 const customHistory = useRouterHistory(createHistory)({
 	basename: DEFAULT_URL
@@ -19,6 +20,14 @@ const routingMiddleware = routerMiddleware(customHistory);
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, loggerMiddleware, routingMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers);
 const history = syncHistoryWithStore(customHistory, store);
+
+const token = localStorage.getItem('patient_token');
+if(token){
+	const email = localStorage.getItem('email');
+	const name = localStorage.getItem('name');
+
+	store.dispatch({type: USER_PATIENT_AUTH_LOGIN, payload: {email, name, authenticate: true} });
+}
 
 import routes from './routes';
 

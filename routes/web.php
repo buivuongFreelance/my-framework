@@ -15,6 +15,28 @@ Route::group(['prefix' => 'api'], function()
 {
     Route::post('authenticate/client/login', 'AuthenticateController@clientLogin');
     Route::post('authenticate/client/register', 'AuthenticateController@clientRegistration');
+    Route::get('authenticate/client/active/{token}', 'AuthenticateController@clientActive');
+
+    Route::post('client/detail', 'ClientController@detail');
+    Route::post('client/edit', 'ClientController@edit');
+});
+
+Route::get('sendemail', function () {
+
+    $data = array(
+        'name' => "Learning Laravel",
+    );
+
+    Mail::send('emails.welcome', $data, function ($message) {
+
+        $message->from('buivuongdhmo@gmail.com', 'Learning Laravel');
+
+        $message->to('buivuongdhmo@gmail.com')->subject('Learning Laravel test email');
+
+    });
+
+    return "Your email has been sent successfully";
+
 });
 
 Route::get('{all?}', function ($url) {
