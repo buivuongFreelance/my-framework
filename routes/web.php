@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 */
 Route::group(['prefix' => 'api'], function()
 {
-    Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::post('authenticate/client/login', 'AuthenticateController@clientLogin');
     Route::post('authenticate/client/register', 'AuthenticateController@clientRegistration');
 });
 

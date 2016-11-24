@@ -29,13 +29,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        //'password', 'remember_token',
     ];
 
-    public function rules(){
-        return [
-            'name' => 'required|min:4',
-        ];
+    public function scopeGetUserWithEmail($query, $email){
+        $query->where('email', $email)
+            ->where('role', 'client')
+            ->first();
+        return $query;
     }
 
     public function client(){

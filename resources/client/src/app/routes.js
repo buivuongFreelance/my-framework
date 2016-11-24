@@ -1,16 +1,15 @@
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
-import {DEFAULT_URL} from '../common/config';
 import AppComponent from './App';
-import LoginComponent from '../user/Login';
 import PatientRegistrationComponent from '../user/PatientRegistration';
+import PatientLoginComponent from '../user/PatientLogin';
 
 const routes = (
-	<Route path={DEFAULT_URL} component={AppComponent}>
+	<Route path="/" component={AppComponent}>
 		<Route path="auth">
-			<Route path="login" component={LoginComponent}/>
-			<Route path="patient">
+			<Route path="client">
 				<Route path="registration" component={PatientRegistrationComponent}/>
+				<Route path="login" component={PatientLoginComponent}/>
 			</Route>
 		</Route>
 	</Route>

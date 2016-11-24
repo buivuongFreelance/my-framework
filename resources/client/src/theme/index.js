@@ -1,1 +1,1 @@
-export * as actions from './ThemeActions';
+export * as ThemeActions from './actions';

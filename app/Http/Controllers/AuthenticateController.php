@@ -12,26 +12,60 @@ use DB;
 use Hash;
 use Uuid;
 use ValidationException;
+use Validator;
+use Input;
 
 class AuthenticateController extends Controller
 {
-    public function authenticate(Request $request){
-    	$credentials = $request->only('email', 'password');
-    	
-    	try{
-    		if(!$token = JWTAuth::attempt($credentials)){
-    			return response()->json(['error' => 'invalid_credentials'], 401);
-    		}
-    	}catch(JWTException $e){
-    		return response()->json(['error' => 'could_not_create_token'], 500);
-    	}
-    	return response()->json(compact('token'));
+    public function clientLogin(Request $request){
+        $all = $request->all();
+        $validator = Validator::make($all, [
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 401);
+        }
+
+        $user = User::getUserWithEmail($all['email'])->first();
+        if(!$user)
+            return response()->json(['message' => 'Email Unregistered'], 500);
+        
+        if($user->status !== 'active')
+            return response()->json(['message' => 'Your Account Not Active. Please Check Your Email To Confirm'], 500);
+        
+        if(!Hash::check($all['password'], $user->password))
+            return response()->json(['message' => 'Your Password Wrong !!!'], 500);
+        
+        $clientClaims = ['email'=>$user->email, 'name'=>$user->name];
+        $credentials = ['email'=>$user->email, 'password'=>$all['password']];
+
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['message' => 'invalid_credentials'], 500);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['message' => 'could_not_create_token'], 500);
+        }
+
+        return response()->json(['token' => $token, 'user' => $clientClaims]);
     }
 
     public function clientRegistration(Request $request){
         $all = $request->all();
         $userUid = Uuid::generate();
         $clientUid = Uuid::generate();
+
+        $validator = Validator::make($all, [
+            'name' => 'required|min:4',
+            'email' => 'required|unique:users,email|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 401);
+        }
 
         DB::beginTransaction();
 

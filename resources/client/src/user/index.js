@@ -1,1 +1,1 @@
-export * as PatientRegistrationActions from './PatientRegistrationActions';
+export * as UserActions from './actions';

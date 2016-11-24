@@ -1,14 +1,12 @@
 import {combineReducers} from 'redux';
 import {routerReducer} from 'react-router-redux';
-import themeReducer from '../theme/ThemeReducer';
-import LoginFormReducer from '../user/LoginFormReducer';
-import PatientRegistrationFormReducer from '../user/PatientRegistrationFormReducer';
+import PatientRegistrationFormReducer from '../user/reducers/PatientRegistrationFormReducer';
+import PatientLoginFormReducer from '../user/reducers/PatientLoginFormReducer';
 
 const rootReducer = combineReducers({
 	routing: routerReducer,
-	theme: themeReducer,
-	loginForm: LoginFormReducer,
-	patientRegistrationForm: PatientRegistrationFormReducer
+	patientRegistrationForm: PatientRegistrationFormReducer,
+	patientLoginForm: PatientLoginFormReducer
 });
 
 export default rootReducer;

@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {ThemeActions} from '../theme';
 
 class Header extends Component{
 	render(){
@@ -37,8 +40,9 @@ class Header extends Component{
           								<a className="link">
           									<i className="fa fa-phone"></i> 1800-123-4567
           								</a>
-          								<a className="navbar-link">
-          									<i className="fa fa-envelope"></i> info@dentistry.com
+          								<a className="navbar-link" onClick={this.props.themeClickClientLogin}>
+          									Login Client
+          									{/*<i className="fa fa-envelope"></i> info@dentistry.com*/}
           								</a>
           							</p>
         						</div>
@@ -78,4 +82,10 @@ class Header extends Component{
 	};
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators({
+		...ThemeActions
+	}, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Header);
