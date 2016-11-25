@@ -7,32 +7,74 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Primacare</title>
 
-	<!-- Font -->
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <!-- font awesome icon -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css">
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/uniform/css/uniform.default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}">
+	<!-- END BEGIN GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN THEME GLOBAL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/css/components.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/css/plugins.min.css') }}">
+	<!-- END BEGIN THEME GLOBAL STYLES -->
+	<!-- BEGIN THEME LAYOUT STYLES -->
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/layout.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/themes/default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/custom.min.css') }}">
+	<!-- END BEGIN THEME LAYOUT STYLES -->
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}">
 	<style type="text/css">
-		.form-group.required label:after{
-			content: " *";
-			color: red;
+		.page-header .page-header-menu{
+			background: #3fce92;
 		}
-		a{
-			cursor: pointer;
+		.page-header .page-header-menu .hor-menu .navbar-nav > li.active > a, .page-header .page-header-menu .hor-menu .navbar-nav > li.active > a:hover, .page-header .page-header-menu .hor-menu .navbar-nav > li.current > a, .page-header .page-header-menu .hor-menu .navbar-nav > li.current > a:hover{
+			color: #fff;
+			text-transform: uppercase;
+			font-weight: 700;
+			background: #25b679;
+		}
+		.page-header .page-header-menu .hor-menu .navbar-nav > li > a{
+			color: #fff;
+			text-transform: uppercase;
+			font-weight: 700;
+		}
+		.page-header .page-header-menu .hor-menu .navbar-nav > li:hover > a, .page-header .page-header-menu .hor-menu .navbar-nav > li.open > a, .page-header .page-header-menu .hor-menu .navbar-nav > li > a:hover, .page-header .page-header-menu .hor-menu .navbar-nav > li > a:focus, .page-header .page-header-menu .hor-menu .navbar-nav > li > a:active{
+			background: #25b679;
+		}
+		.page-header .page-header-menu .search-form .input-group .form-control{
+			background: #fafaf6;
+		}
+		.page-header .page-header-menu .search-form .input-group{
+			background: #fafaf6;
+		}
+		.form-control{
+			height: 34px;
+		}
+		.page-header .page-header-top .page-logo .logo-default{
+			margin: 17.5px 0 0;
 		}
 	</style>
 </head>
 <body>
 	<div id="app"/>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+	<!-- BEGIN CORE PLUGINS -->
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/jquery.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/js.cookie.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/jquery.blockui.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/uniform/jquery.uniform.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+	<!-- END BEGIN CORE PLUGINS -->
+	<!-- BEGIN THEME GLOBAL SCRIPTS -->
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/scripts/app.min.js') }}"></script>
+	<!-- END BEGIN THEME GLOBAL SCRIPTS -->
+	<!-- BEGIN THEME LAYOUT SCRIPTS -->
+	<script type="text/javascript" stc="{{ URL::asset('metronic/assets/layouts/layout3/scripts/layout.min.js') }}"></script>
+	<!-- END BEGIN THEME LAYOUT SCRIPTS -->
     <script type="text/javascript" src="{{ URL::asset('js/is.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/bundle.js') }}"></script>
 </body>

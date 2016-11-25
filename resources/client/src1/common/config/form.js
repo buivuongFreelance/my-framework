@@ -1,0 +1,1 @@
+export const ATTR_FORM = {value: '', error: '', valid: false};

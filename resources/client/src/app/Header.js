@@ -26,6 +26,135 @@ class Header extends Component{
 		}
 
 		return (
+			<div className="page-header">
+				<div className="tp-top-bar">
+					<div className="container">
+						<div className="row">
+							<div className="col-md-6 clinic-address">
+								<div>
+									<i className="fa fa-map-marker"/>&nbsp;
+									 28 Jackson, Near Street 1020 Chicago, IL 60604-2340
+								</div>
+							</div>
+							<div className="col-md-6 tp-social">
+								<ul>
+									<li>
+										<a><i className="fa fa-facebook"/></a>
+									</li>
+									<li>
+										<a><i className="fa fa-twitter"/></a>
+									</li>
+									<li>
+										<a><i className="fa fa-google-plus"/></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="page-header-top">
+					<div className="container">
+						<div className="page-logo">
+							<a>
+								<img src="http://jituchauhan.com/medical/dentist/green/html-regular/images/logo.png" className="logo-default"/>
+							</a>
+						</div>
+						<a href="javascript:;" className="menu-toggler"></a>
+						<div className="top-menu">
+							<ul className="nav navbar-nav pull-right">
+								{/*<li className="dropdown dropdown-notification dropdown-light" id="header_notification_bar">
+									<a href="javascript:;" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+										<i className="icon-bell"></i>
+	                                    <span className="badge badge-default">3</span>
+									</a>
+									<ul className="dropdown-menu">
+										<li>
+                                        	<a>This is Notification 1</a>
+                                    	</li>
+                                    	<li>
+                                        	<a>This is Notification 2</a>
+                                    	</li>
+                                    	<li>
+                                        	<a>THis is Notification 3</a>
+                                    	</li>
+									</ul>
+								</li>*/}
+								<li>
+									<a>
+										<i className="icon-user"/> Login User
+									</a>
+								</li>
+								<li>
+									<a>
+										<i className="icon-heart"/> Login Doctor
+									</a>
+								</li>
+								{/*<li className="dropdown dropdown-user dropdown-light">
+									<a href="javascript:;" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+										<img alt="" className="img-circle" src="http://keenthemes.com/preview/metronic/theme/assets/layouts/layout3/img/avatar9.jpg"/>
+										<span className="username username-hide-mobile">Nick</span>
+									</a>
+									<ul className="dropdown-menu dropdown-menu-default">
+										<li>
+	                                        <a>
+	                                        	<i className="icon-user"></i> My Profile
+	                                        </a>
+	                                    </li>
+	                                    <li>
+                                        	<a>
+                                            	<i className="icon-key"></i> Log Out
+                                            </a>
+                                    	</li>
+									</ul>
+								</li>*/}
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div className="page-header-menu">
+					<div className="container">
+						<form className="search-form">
+                        	<div className="input-group">
+                            	<input type="text" className="form-control" placeholder="Search" name="query"/>
+                            	<span className="input-group-btn">
+                                	<a href="javascript:;" className="btn submit">
+                                    	<i className="icon-magnifier"></i>
+                                	</a>
+                            	</span>
+                        	</div>
+                    	</form>
+                    	
+                    	<div className="hor-menu">
+                    		<ul className="nav navbar-nav">
+                    			<li>
+                    				<a>
+                    					Home
+	                                </a>
+                    			</li>
+                    			<li className="menu-dropdown">
+                    				<a>
+                    					Services
+	                                </a>
+                    			</li>
+                    			<li className="menu-dropdown">
+                    				<a>
+                    					Doctors
+	                                </a>
+                    			</li>
+                    			<li className="menu-dropdown">
+                    				<a>
+                    					News
+	                                </a>
+                    			</li>
+                    		</ul>
+                    	</div>
+
+					</div>
+				</div>
+			</div>
+		);
+
+		/*return (
 			<header id="layout-header">
 				<div className="main-holder">
 					<div className="tp-top-bar">
@@ -96,7 +225,7 @@ class Header extends Component{
 					</div>
 				</div>
 			</header>
-		);
+		);*/
 	};
 };
 

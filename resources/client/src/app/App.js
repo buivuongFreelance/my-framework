@@ -4,17 +4,18 @@ import Footer from './Footer';
 
 export default class App extends Component {
 	componentDidMount(){
-		
+		$('body').addClass('page-container-bg-solid');
+	}
+	componentWillUnmount(){
+		$('body').removeClass('page-container-bg-solid');	
 	}
   	render() {
 	    return (
 			<div>
 				<Header/>
-				<section id="layout-content">
-					<div className="main-holder">
-						{this.props.children}
-					</div>
-				</section>
+				<div className="tp-main-container">
+					{this.props.children}
+				</div>
         		<Footer/>
 			</div>
 	    );
