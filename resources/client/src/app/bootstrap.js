@@ -12,13 +12,22 @@ import loggerMiddleware from '../common/middlewares/logger';
 import {DEFAULT_URL} from '../common/config';
 import {USER_PATIENT_AUTH_LOGIN} from '../user/types';
 
+import {IntlProvider} from 'react-intl-redux';
+import enLocaleData from 'react-intl/locale-data/en';
+import {addLocaleData} from 'react-intl';
+import currentLang from '../lang/en';
+
 const customHistory = useRouterHistory(createHistory)({
 	basename: DEFAULT_URL
 });
 
+addLocaleData([
+	...enLocaleData
+]);
+
 const routingMiddleware = routerMiddleware(customHistory);
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, loggerMiddleware, routingMiddleware)(createStore);
-const store = createStoreWithMiddleware(reducers);
+const store = createStoreWithMiddleware(reducers, currentLang);
 const history = syncHistoryWithStore(customHistory, store);
 
 const token = localStorage.getItem('patient_token');
@@ -31,11 +40,12 @@ if(token){
 
 import routes from './routes';
 
-/*import LoginComponent from './components/auth/login';*/
 ReactDOM.render(
 	<Provider store={store}>
-		<Router history={history}>
-			{routes}
-		</Router>
+		<IntlProvider>
+			<Router history={history}>
+				{routes}
+			</Router>
+		</IntlProvider>
 	</Provider>
 , document.getElementById('app'));

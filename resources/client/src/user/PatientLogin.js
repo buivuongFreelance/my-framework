@@ -4,10 +4,29 @@ import {bindActionCreators} from 'redux';
 import {UserActions} from '../user';
 import {ThemeActions} from '../theme';
 import {GetFormValues} from '../common/helpers';
+import {FormattedMessage} from 'react-intl';
+import scriptLoader from 'react-async-script-loader';
 
 const reducerName = 'patientLoginForm';
 
 class PatientLogin extends Component{
+	componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
+    	if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished 
+	    	if (isScriptLoadSucceed) {
+	    		this.initEditor();
+	    	}
+	    	else this.props.onError();
+    	}
+  	}
+
+  	componentDidMount(){
+  		console.log('sasss');
+    	const {isScriptLoaded, isScriptLoadSucceed} = this.props
+    	if (isScriptLoaded && isScriptLoadSucceed){
+      		this.initEditor();
+    	}
+  	}
+
 	_onValidation(field, value){
 		let errors = [];
 		switch(field){
@@ -52,8 +71,73 @@ class PatientLogin extends Component{
 		this.props.userPatientLoginValidationField(field, errors, reducerName);
 	}
 	render(){
-		const {touched, submitting, name, email, password, rePassword} = this.props[reducerName];
+		//const {touched, submitting, name, email, password, rePassword} = this.props[reducerName];
 		return (
+			<div className="container">
+
+				<div className="row">
+					<div className="col-md-12">
+						<div className="portlet box green login">
+							<div className="portlet-title">
+								<div className="caption">
+									<i className="fa fa-user"/> <FormattedMessage id="app.greeting" values={{name: 'sas'}}/>
+								</div>
+							</div>
+							<div className="portlet-body form">
+								<form className="form-horizontal" noValidation method="POST">
+									<div className="form-body">
+										<div className="row">
+											<div className="col-md-12">
+												<div className="form-group">
+													<label className="control-label col-md-3">
+														Email Address
+													</label>
+													<div className="col-md-9">
+														<input type="email" className="form-control" placeholder="Email Address"/>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div className="row">
+											<div className="col-md-12">
+												<div className="form-group">
+													<label className="control-label col-md-3">
+														Password
+													</label>
+													<div className="col-md-9">
+														<input type="password" className="form-control" placeholder="Password"/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="form-actions fluid">
+										<div className="row">
+											<div className="col-md-12">
+												<div className="row">
+													<div className="col-md-4">
+														<button type="submit" className="btn green uppercase">Login User</button>
+													</div>
+													<div className="col-md-4">
+														<a href="javascript:;" className="forget-password">Create New User?</a>
+		                        					</div>
+		                        					<div className="col-md-4">
+                    									<a href="javascript:;" className="forget-password">Forgot Password?</a>
+                    								</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		);
+		/*return (
 			<div className="tp-main-container">
 				<div className="tp-contact">
 					<div className="container">
@@ -99,7 +183,7 @@ class PatientLogin extends Component{
 					</div>
 				</div>
 			</div>
-		);
+		);*/
 	};
 };
 
@@ -114,4 +198,8 @@ const mapDispatchToProps = (dispatch) => {
 	}, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PatientLogin);
+export default scriptLoader([
+    'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'
+  ],
+  '/assets/bootstrap-markdown.js')(PatientLogin);

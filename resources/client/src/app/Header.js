@@ -6,24 +6,20 @@ import {ThemeActions} from '../theme';
 class Header extends Component{
 	render(){
 		let renderLogout = (
-			<a className="navbar-link" onClick={this.props.themeClickClientLogout}>
-				Logout Patient
-			</a>
+			<div>Render Logout</div>
 		)
 		let renderLogin = (
-			<a className="navbar-link" onClick={this.props.themeClickClientView}>
-				<i className="fa fa-envelope"></i> {this.props.patientAuth.email}
-			</a>
+			<div>Render Login</div>
 		)
 
-		if(!this.props.patientAuth.authenticate){
+		/*if(!this.props.patientAuth.authenticate){
 			renderLogout = null;
 			renderLogin = (
 				<a className="navbar-link" onClick={this.props.themeClickClientLogin}>
 					Login Client
 				</a>
 			)
-		}
+		}*/
 
 		return (
 			<div className="page-header">

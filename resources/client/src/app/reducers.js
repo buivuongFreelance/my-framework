@@ -5,6 +5,7 @@ import PatientLoginFormReducer from '../user/reducers/PatientLoginFormReducer';
 import PatientEditFormReducer from '../user/reducers/PatientEditFormReducer';
 import PatientAuthReducer from '../user/reducers/PatientAuthReducer';
 import PatientReducer from '../user/reducers/PatientReducer';
+import {intlReducer} from 'react-intl-redux';
 
 const rootReducer = combineReducers({
 	routing: routerReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
 	patientLoginForm: PatientLoginFormReducer,
 	patientEditForm: PatientEditFormReducer,
 	patientAuth: PatientAuthReducer,
-	patient: PatientReducer
+	patient: PatientReducer,
+	intl: intlReducer
 });
 
 export default rootReducer;

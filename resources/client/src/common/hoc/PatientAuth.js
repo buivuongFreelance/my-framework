@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 
 const Auth = ComposedComponent => {
     class Authentication extends Component{
-    	componentWillMount(){
+    	/*componentWillMount(){
     		if(this.props.route.path === 'login' || this.props.route.path === 'registration'){
     			if(this.props.patientAuth.authenticate)
     				this.props.push('/auth/client/dashboard');
@@ -33,7 +33,7 @@ const Auth = ComposedComponent => {
                 if(!this.props.patientAuth.authenticate)
                     this.props.push('/auth/client/login');
             }
-        }
+        }*/
 		render(){
 			return <ComposedComponent {...this.props}/>
 		};

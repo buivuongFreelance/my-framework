@@ -86,6 +86,72 @@ class PatientRegistration extends Component{
 		const {touched, submitting, name, email, password, rePassword} = this.props[reducerName];
 
 		return (
+			<div className="container">
+
+				<div className="row">
+					<div className="col-md-12">
+						<div className="portlet box green login">
+							<div className="portlet-title">
+								<div className="caption">
+									<i className="fa fa-user"/> User 
+								</div>
+							</div>
+							<div className="portlet-body form">
+								<form className="form-horizontal" noValidation method="POST">
+									<div className="form-body">
+										<div className="row">
+											<div className="col-md-12">
+												<div className="form-group">
+													<label className="control-label col-md-3">
+														Email Address
+													</label>
+													<div className="col-md-9">
+														<input type="email" className="form-control" placeholder="Email Address"/>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div className="row">
+											<div className="col-md-12">
+												<div className="form-group">
+													<label className="control-label col-md-3">
+														Password
+													</label>
+													<div className="col-md-9">
+														<input type="password" className="form-control" placeholder="Password"/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div className="form-actions fluid">
+										<div className="row">
+											<div className="col-md-12">
+												<div className="row">
+													<div className="col-md-4">
+														<button type="submit" className="btn green uppercase">Login User</button>
+													</div>
+													<div className="col-md-4">
+														<a href="javascript:;" className="forget-password">Create New User?</a>
+		                        					</div>
+		                        					<div className="col-md-4">
+                    									<a href="javascript:;" className="forget-password">Forgot Password?</a>
+                    								</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		);
+
+		/*return (
 			<div className="tp-main-container">
 				<div className="tp-contact">
 					<div className="container">
@@ -171,7 +237,7 @@ class PatientRegistration extends Component{
 					</div>
 				</div>
 			</div>
-		);
+		);*/
 	};
 };
 

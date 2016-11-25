@@ -24,6 +24,9 @@
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/themes/default.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/custom.min.css') }}">
 	<!-- END BEGIN THEME LAYOUT STYLES -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css') }}">
+	<!-- END BEGIN PAGE LEVEL STYLES -->
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}">
 	<style type="text/css">
 		.page-header .page-header-menu{
@@ -55,6 +58,26 @@
 		.page-header .page-header-top .page-logo .logo-default{
 			margin: 17.5px 0 0;
 		}
+		.form-group{
+			margin-bottom: 15px;
+		}
+		.portlet.box.green.login{
+			width: 600px;
+			margin: auto;
+		}
+		.portlet.box.green>.portlet-title, .portlet.green, .portlet>.portlet-body.green{
+			background: #3fce92;
+		}
+		.btn.green:not(.btn-outline){
+			background: #3fce92;
+		}
+		.btn.green:not(.btn-outline).active, .btn.green:not(.btn-outline):active, .btn.green:not(.btn-outline):hover, .open>.btn.green:not(.btn-outline).dropdown-toggle{
+			background: #25b679;
+			border-color: #25b679;
+		}
+		.forget-password{
+			line-height: 32px;
+		}
 	</style>
 </head>
 <body>
@@ -73,9 +96,14 @@
 	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/scripts/app.min.js') }}"></script>
 	<!-- END BEGIN THEME GLOBAL SCRIPTS -->
 	<!-- BEGIN THEME LAYOUT SCRIPTS -->
-	<script type="text/javascript" stc="{{ URL::asset('metronic/assets/layouts/layout3/scripts/layout.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/layouts/layout3/scripts/layout.min.js') }}"></script>
 	<!-- END BEGIN THEME LAYOUT SCRIPTS -->
+	<!-- BEGIN PAGE SCRIPTS -->
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+	<!-- END BEGIN PAGE SCRIPTS -->
     <script type="text/javascript" src="{{ URL::asset('js/is.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/bundle.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/init.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/bootstrap.js') }}"></script>
 </body>
 </html>
