@@ -1,28 +1,14 @@
 import React, {Component} from 'react';
 import {FormattedMessage} from 'react-intl';
-import scriptLoader from 'react-async-script-loader';
+import ScriptHOC from '../common/hoc/Script';
+import CSS from '../common/config/css';
+import JS from '../common/config/js';
 
 class UserSignIn extends Component{
-	/*componentDidMount(){
+	componentDidMount(){
 		toastr.success('Successful Login For Server', 'Notifications', {timeOut: 100000});
 		toastr.error('Error Login For Server', 'Notifications', {timeOut: 100000});
-	}*/
-	componentWillReceiveProps({ isScriptLoaded, isScriptLoadSucceed }){
-    	if (isScriptLoaded && !this.props.isScriptLoaded) { // load finished 
-	    	if (isScriptLoadSucceed) {
-	    		this.initEditor();
-	    	}
-	    	else this.props.onError();
-    	}
-  	}
-
-  	componentDidMount(){
-  		console.log('sasss');
-    	const {isScriptLoaded, isScriptLoadSucceed} = this.props
-    	if (isScriptLoaded && isScriptLoadSucceed){
-      		this.initEditor();
-    	}
-  	}
+	}
 	render(){
 		return (
 			<div className="container">
@@ -91,8 +77,9 @@ class UserSignIn extends Component{
 	}
 }
 
-export default scriptLoader([
-    'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'
-  ],
-  '/assets/bootstrap-markdown.js')(UserSignIn);
+export default ScriptHOC(
+	{
+		css: [CSS.bootstrapSelect],
+		js: [JS.bootstrapSelect]
+	}
+)(UserSignIn);

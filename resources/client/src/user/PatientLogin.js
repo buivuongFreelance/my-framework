@@ -198,8 +198,4 @@ const mapDispatchToProps = (dispatch) => {
 	}, dispatch);
 };
 
-export default scriptLoader([
-    'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js'
-  ],
-  '/assets/bootstrap-markdown.js')(PatientLogin);
+export default PatientLogin;

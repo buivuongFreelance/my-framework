@@ -31,7 +31,6 @@
     "babel-preset-stage-1": "^6.1.18",
     "lodash": "^4.17.2",
     "react": "^0.14.8",
-    "react-async-script-loader": "^0.2.2",
     "react-dom": "^0.14.3",
     "react-intl": "^2.1.5",
     "react-intl-redux": "^0.1.0",
