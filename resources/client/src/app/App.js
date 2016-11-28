@@ -13,7 +13,7 @@ export default class App extends Component {
 	    return (
 			<div>
 				<Header/>
-				<div className="tp-main-container">
+				<div>
 					{this.props.children}
 				</div>
         		<Footer/>

@@ -9,13 +9,18 @@ import reduxThunk from 'redux-thunk';
 
 import reducers from './reducers';
 import loggerMiddleware from '../common/middlewares/logger';
-import {DEFAULT_URL} from '../common/config';
-import {USER_PATIENT_AUTH_LOGIN} from '../user/types';
+import {DEFAULT_URL, API_URL} from '../common/config';
+/*import {USER_PATIENT_AUTH_LOGIN} from '../user/types';*/
 
 import {IntlProvider} from 'react-intl-redux';
 import enLocaleData from 'react-intl/locale-data/en';
 import {addLocaleData} from 'react-intl';
 import currentLang from '../lang/en';
+
+import axios from 'axios';
+
+axios.defaults.baseURL = API_URL;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const customHistory = useRouterHistory(createHistory)({
 	basename: DEFAULT_URL
@@ -35,7 +40,7 @@ if(token){
 	const email = localStorage.getItem('email');
 	const name = localStorage.getItem('name');
 
-	store.dispatch({type: USER_PATIENT_AUTH_LOGIN, payload: {email, name, authenticate: true} });
+	/*store.dispatch({type: USER_PATIENT_AUTH_LOGIN, payload: {email, name, authenticate: true} });*/
 }
 
 import routes from './routes';

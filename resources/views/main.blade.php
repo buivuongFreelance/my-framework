@@ -78,6 +78,12 @@
 		.forget-password{
 			line-height: 32px;
 		}
+		.mg-top-40{
+			margin-top: 40px;
+		}
+		.page-spinner-bar > div, .block-spinner-bar > div{
+			background: #3fce92;
+		}
 	</style>
 </head>
 <body>
@@ -100,6 +106,7 @@
 	<!-- END BEGIN THEME LAYOUT SCRIPTS -->
 	<!-- BEGIN PAGE SCRIPTS -->
 	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('metronic/assets/pages/scripts/ui-blockui.min.js') }}"></script>
 	<!-- END BEGIN PAGE SCRIPTS -->
     <script type="text/javascript" src="{{ URL::asset('js/is.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/init.js') }}"></script>

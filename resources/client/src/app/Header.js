@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {ThemeActions} from '../theme';
+import {routerActions} from 'react-router-redux';
 
 class Header extends Component{
 	render(){
@@ -76,7 +76,7 @@ class Header extends Component{
 									</ul>
 								</li>*/}
 								<li>
-									<a>
+									<a onClick={()=>this.props.push('/auth/user/signin')}>
 										<i className="icon-user"/> Login User
 									</a>
 								</li>
@@ -231,7 +231,7 @@ const mapStateToProps = ({patientAuth}) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		...ThemeActions
+		...routerActions
 	}, dispatch);
 };
 
