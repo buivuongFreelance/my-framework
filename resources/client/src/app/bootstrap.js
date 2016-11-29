@@ -10,12 +10,6 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import loggerMiddleware from '../common/middlewares/logger';
 import {DEFAULT_URL, API_URL} from '../common/config';
-/*import {USER_PATIENT_AUTH_LOGIN} from '../user/types';*/
-
-import {IntlProvider} from 'react-intl-redux';
-import enLocaleData from 'react-intl/locale-data/en';
-import {addLocaleData} from 'react-intl';
-import currentLang from '../lang/en';
 
 import axios from 'axios';
 
@@ -26,31 +20,27 @@ const customHistory = useRouterHistory(createHistory)({
 	basename: DEFAULT_URL
 });
 
-addLocaleData([
-	...enLocaleData
-]);
-
 const routingMiddleware = routerMiddleware(customHistory);
-const createStoreWithMiddleware = applyMiddleware(reduxThunk, routingMiddleware)(createStore);
-const store = createStoreWithMiddleware(reducers, currentLang);
+const createStoreWithMiddleware = applyMiddleware(reduxThunk, loggerMiddleware, routingMiddleware)(createStore);
+const store = createStoreWithMiddleware(reducers);
 const history = syncHistoryWithStore(customHistory, store);
 
-const token = localStorage.getItem('patient_token');
-if(token){
-	const email = localStorage.getItem('email');
-	const name = localStorage.getItem('name');
+import {USER_AUTH_SIGNIN} from '../user/types/auth';
 
-	/*store.dispatch({type: USER_PATIENT_AUTH_LOGIN, payload: {email, name, authenticate: true} });*/
+const token = localStorage.getItem('token');
+if(token){
+	const user = JSON.parse(localStorage.getItem('user'));
+	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+	//store.dispatch({type: USER_AUTH_SIGNIN, payload: user});
 }
 
 import routes from './routes';
 
 ReactDOM.render(
 	<Provider store={store}>
-		<IntlProvider>
-			<Router history={history}>
-				{routes}
-			</Router>
-		</IntlProvider>
+		<Router history={history}>
+			{routes}
+		</Router>
 	</Provider>
 , document.getElementById('app'));

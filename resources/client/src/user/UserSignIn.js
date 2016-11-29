@@ -13,6 +13,9 @@ class UserSignIn extends Component{
 		e.preventDefault();
 		this.props.userFormSignInSubmit(this.refs.login);
 	}
+	componentWillUnmount(){
+		this.props.userFormSignInClear();
+	}
 	render(){
 		const {touched, errors} = this.props.userFormSignIn;
 

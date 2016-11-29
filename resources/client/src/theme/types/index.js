@@ -1,5 +1,4 @@
 //ACTIONS
-export const THEME_CLICK_CLIENT_LOGIN = 'themeClickClientLogin';
-export const THEME_CLICK_CLIENT_LOGOUT = 'themeClickClientLogout';
-export const THEME_CLICK_CLIENT_REGISTRATION = 'themeClickClientRegistration';
-export const THEME_CLICK_CLIENT_EDIT = 'themeClickClientEdit';
+export const THEME_CONFIRM_SHOW = 'themeConfirmShow';
+export const THEME_CONFIRM_HIDE = 'themeConfirmHide';
+export const THEME_CONFIRM_ACCEPT = 'themeConfirmAccept';

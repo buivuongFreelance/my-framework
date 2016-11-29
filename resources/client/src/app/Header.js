@@ -2,27 +2,52 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {routerActions} from 'react-router-redux';
+import * as UserAuthActions from '../user/actions/auth';
+
+import ConfirmModal from '../common/components/confirm';
 
 class Header extends Component{
+	_renderSignOutUser(){
+		if(this.props.userAuth.email){
+			return (
+				<li>
+					<a onClick={()=>this.props.userAuthSignOut()}>
+						<i className="icon-logout"/> Sign Out User
+					</a>
+				</li>
+			);
+		}else return null;
+	}
+	_renderSignInUser(){
+		if(this.props.userAuth.email){
+			return null;
+		}else{
+			return (
+				<li>
+					<a onClick={()=>this.props.push('/auth/user/signin')}>
+						<i className="icon-user"/> Sign In User
+					</a>
+				</li>
+			);
+		}
+	}
+	_renderSignInDoctor(){
+		if(this.props.userAuth.email){
+			return null;
+		}else{
+			return (
+				<li>
+					<a onClick={()=>this.props.push('/auth/user/signin')}>
+						<i className="icon-heart"/> Sign In Doctor
+					</a>
+				</li>
+			);
+		}	
+	}
 	render(){
-		let renderLogout = (
-			<div>Render Logout</div>
-		)
-		let renderLogin = (
-			<div>Render Login</div>
-		)
-
-		/*if(!this.props.patientAuth.authenticate){
-			renderLogout = null;
-			renderLogin = (
-				<a className="navbar-link" onClick={this.props.themeClickClientLogin}>
-					Login Client
-				</a>
-			)
-		}*/
-
 		return (
 			<div className="page-header">
+				<ConfirmModal/>
 				<div className="tp-top-bar">
 					<div className="container">
 						<div className="row">
@@ -75,16 +100,9 @@ class Header extends Component{
                                     	</li>
 									</ul>
 								</li>*/}
-								<li>
-									<a onClick={()=>this.props.push('/auth/user/signin')}>
-										<i className="icon-user"/> Login User
-									</a>
-								</li>
-								<li>
-									<a>
-										<i className="icon-heart"/> Login Doctor
-									</a>
-								</li>
+								{this._renderSignInUser()}
+								{this._renderSignInDoctor()}
+								{this._renderSignOutUser()}
 								{/*<li className="dropdown dropdown-user dropdown-light">
 									<a href="javascript:;" className="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 										<img alt="" className="img-circle" src="http://keenthemes.com/preview/metronic/theme/assets/layouts/layout3/img/avatar9.jpg"/>
@@ -149,89 +167,17 @@ class Header extends Component{
 				</div>
 			</div>
 		);
-
-		/*return (
-			<header id="layout-header">
-				<div className="main-holder">
-					<div className="tp-top-bar">
-						<div className="container">
-							<div className="row">
-								<div className="col-md-6 clinic-address">
-	          						<div>
-	          							<i className="fa fa-map-marker"></i> 28 Jackson, Near Street 1020 Chicago, IL 60604-2340
-	          						</div>
-	        					</div>
-	        					<div className="col-md-6 tp-social">
-						        	<ul>
-						            	<li><a href="#"><i className="fa fa-facebook"></i></a></li>
-						            	<li><a href="#"><i className="fa fa-twitter"></i></a></li>
-						            	<li><a href="#"><i className="fa fa-google"></i></a></li>
-						          	</ul>
-						        </div>
-							</div>
-						</div>
-					</div>
-					<header className="tp-header">
-						<div className="container">
-							<div className="row">
-								<div className="col-md-3 tp-logo">
-									<a className="navbar-brand"><img src="http://jituchauhan.com/medical/dentist/green/html-regular/images/logo.png" className="img-responsive"/></a>
-								</div>
-								<div className="col-md-9 tp-top-link">
-          							<p className="navbar-text navbar-right">
-          								<a className="link">
-          									<i className="fa fa-comments-o"></i> 24/7 Support
-          								</a>
-          								<a className="link">
-          									<i className="fa fa-phone"></i> 1800-123-4567
-          								</a>
-          								{renderLogin}
-          								{renderLogout}
-          							</p>
-        						</div>
-							</div>
-						</div>
-					</header>
-					<div className="tp-navigation" id="headersticky">
-						<nav className="navbar navbar-default navbar-static-top marginBottom-0">
-							<div className="container">
-								<div className="navbar-header">
-          							<button type="button" className="navbar-toggle" 
-          								data-toggle="collapse" data-target="#navbar-collapse-1">
-          								<span className="sr-only">Toggle navigation</span> 
-          								<span className="icon-bar"></span> 
-          								<span className="icon-bar"></span>
-          								<span className="icon-bar"></span>
-          							</button>
-        						</div>
-        						<div className="collapse navbar-collapse" id="navbar-collapse-1">
-        							<ul className="nav navbar-nav">
-        								<li><a href="{{ 'homepage'|page }}" title="Home">Home</a></li>
-        								<li><a href="{{ 'about-us'|page }}" title="About Us">About Us</a></li>
-            							<li><a href="{{ 'terms-conditions'|page }}" title="About Us">Terms Of Conditions</a></li>
-							            <li><a href="{{ 'sitemap'|page }}" title="Sitemap">Sitemap</a></li>
-							            <li><a href="{{ 'faq'|page }}" title="Faq">Faq</a></li>
-							            <li><a href="{{ 'news'|page }}" title="News">News</a></li>
-							            <li><a href="{{ 'doctors'|page }}" title="Doctors">Doctors</a></li>
-							            <li><a href="{{ 'services'|page }}" title="Services">Services</a></li>
-        							</ul>
-        						</div>
-							</div>
-						</nav>
-					</div>
-				</div>
-			</header>
-		);*/
 	};
 };
 
-const mapStateToProps = ({patientAuth}) => {
-	return {patientAuth};
+const mapStateToProps = ({userAuth}) => {
+	return {userAuth};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		...routerActions
+		...routerActions,
+		...UserAuthActions
 	}, dispatch);
 };
 

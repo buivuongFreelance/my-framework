@@ -26,9 +26,10 @@
 	<!-- END BEGIN THEME LAYOUT STYLES -->
 	<!-- BEGIN PAGE LEVEL STYLES -->
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/pages/css/login.min.css') }}">
 	<!-- END BEGIN PAGE LEVEL STYLES -->
-	<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}">
-	<style type="text/css">
+	<!--<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}">-->
+	<!--<style type="text/css">
 		.page-header .page-header-menu{
 			background: #3fce92;
 		}
@@ -84,7 +85,47 @@
 		.page-spinner-bar > div, .block-spinner-bar > div{
 			background: #3fce92;
 		}
-	</style>
+		/* Remove scroll on the body when react-modal is open */
+		.ReactModal__Overlay {
+			-webkit-perspective: 600;
+			perspective: 600;
+			opacity: 0;
+			overflow-x: hidden;
+			overflow-y: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.ReactModal__Overlay--after-open {
+			opacity: 1;
+			transition: opacity 150ms ease-out;
+		}
+
+		.ReactModal__Content {
+			-webkit-transform: scale(0.5) rotateX(-30deg);
+			transform: scale(0.5) rotateX(-30deg);
+		}
+
+		.ReactModal__Content--after-open {
+			-webkit-transform: scale(1) rotateX(0deg);
+			transform: scale(1) rotateX(0deg);
+			transition: all 150ms ease-in;
+		}
+
+		.ReactModal__Overlay--before-close {
+			opacity: 0;
+		}
+
+		.ReactModal__Content--before-close {
+			-webkit-transform: scale(0.5) rotateX(30deg);
+			transform: scale(0.5) rotateX(30deg);
+			transition: all 150ms ease-in;
+		}
+
+		.ReactModal__Content.modal-dialog {
+  			border: none;
+  			background-color: transparent;
+}
+	</style>-->
 </head>
 <body>
 	<div id="app"/>
@@ -113,4 +154,3 @@
     <script type="text/javascript" src="{{ URL::asset('js/vendor.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('js/bootstrap.js') }}"></script>
 </body>
-</html>

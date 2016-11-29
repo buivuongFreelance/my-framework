@@ -1,15 +1,16 @@
 import {combineReducers} from 'redux';
 import {routerReducer} from 'react-router-redux';
-import {intlReducer} from 'react-intl-redux';
 
 import UserFormSignIn from '../user/reducers/UserFormSignIn';
-import UserFormSignUp from '../user/reducers/UserFormSignUp';
 
 const rootReducer = combineReducers({
 	routing: routerReducer,
-	intl: intlReducer,
+	userFormSignIn: UserFormSignIn
+	/*intl: intlReducer,
 	userFormSignIn: UserFormSignIn,
-	userFormSignUp: UserFormSignUp
+	userFormSignUp: UserFormSignUp,
+	userAuth: UserAuth,
+	theme: Theme*/
 });
 
 export default rootReducer;

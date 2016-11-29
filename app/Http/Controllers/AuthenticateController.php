@@ -116,7 +116,7 @@ class AuthenticateController extends Controller
         }
         DB::commit();
 
-        Mail::to($all['email'])->send(new UserSignUp($all['last_name'], $user->remember_token));
+        Mail::to($all['email'])->send(new UserSignUp($all['first_name'].' '.$all['last_name'], $user->remember_token));
         return response()->json(['message'=>'success']);
     }
 }

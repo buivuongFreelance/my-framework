@@ -4,11 +4,12 @@ import {
 	USER_FORM_SIGNIN_VALIDATION_EMAIL,
 	USER_FORM_SIGNIN_CHANGE_PASSWORD,
 	USER_FORM_SIGNIN_VALIDATION_PASSWORD,
+	USER_FORM_SIGNIN_CLEAR
 } from '../types/formSignIn';
 
 import axios from 'axios';
 import Block from '../../common/components/block';
-import {push} from 'react-router-redux';
+import * as UserAuthActions from './auth';
 
 export const userFormSignInFocus = () => {
 	return {
@@ -88,16 +89,22 @@ export const userFormSignInStep2 = (element) => {
 			Block.show(element);
 			setTimeout(() => {
 				axios.post('/authenticate/user/signin', values)
-				.then(data => {
+				.then(response => {
 					const message = getState().intl.messages['page.user.signin.msg.success'];
-
 					toastr.success(message);
-					dispatch(push('/auth/user/dashboard'));
+					dispatch(UserAuthActions.userAuthSignIn(response.data.token, response.data.user));
 					Block.hide(element);
 				})
 				.catch(error => {
 					if(error.response){
-						toastr.error(error.response.data.message);
+						let message = '';
+						if(error.response.status === 401){
+							const errors = error.response.data;
+							for(let field in errors)
+								message = errors[field][0];
+						}else
+							message = error.response.data.message;
+						toastr.error(message);
 						Block.hide(element);
 					}
 				})
@@ -107,10 +114,21 @@ export const userFormSignInStep2 = (element) => {
 };
 
 export const userFormSignInSubmit = (element) => {
-	return (dispatch) => {
+	return dispatch => {
 		dispatch(userFormSignInStep1())
 		.then(() => {
 			dispatch(userFormSignInStep2(element));
 		});
 	};
+};
+
+export const userFormSignInClear = () => {
+	return {
+		type: USER_FORM_SIGNIN_CLEAR,
+		payload: true
+	}
+};
+
+export const userBackendFormSignInSubmit = (element) => {
+
 };

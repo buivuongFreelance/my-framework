@@ -134,7 +134,9 @@ class UserSignUp extends Component{
 																<button type="submit" className="btn green uppercase"><FormattedMessage id="page.user.signup.btn.submit"/></button>
 															</div>
 															<div className="col-md-8 text-right">
-																<a className="forget-password" onClick={(e) => this.props.push('/auth/user/signin')}><FormattedMessage id="global.btn.back.signin"/></a>
+																<a className="forget-password" onClick={(e) => this.props.push('/auth/user/signin')}>
+																	<FormattedMessage id="global.btn.back.signin"/>
+																</a>
 				                        					</div>
 														</div>
 													</div>

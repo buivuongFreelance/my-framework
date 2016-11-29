@@ -3,7 +3,8 @@ import {
 	USER_FORM_SIGNIN_CHANGE_EMAIL,
 	USER_FORM_SIGNIN_VALIDATION_EMAIL,
 	USER_FORM_SIGNIN_CHANGE_PASSWORD,
-	USER_FORM_SIGNIN_VALIDATION_PASSWORD
+	USER_FORM_SIGNIN_VALIDATION_PASSWORD,
+	USER_FORM_SIGNIN_CLEAR
 } from '../types/formSignIn';
 
 const fields = {email: '', password: ''};
@@ -22,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, values: {...state.values, password: payload}};
 		case USER_FORM_SIGNIN_VALIDATION_PASSWORD:
 			return {...state, errors: {...state.errors, password: payload}};
+		case USER_FORM_SIGNIN_CLEAR:
+			return {...state, ...INITIAL_STATE};
 	}
 	return state;
 };
