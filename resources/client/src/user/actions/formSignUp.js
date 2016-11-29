@@ -10,24 +10,34 @@ import {
 	USER_FORM_SIGNUP_VALIDATION_PASSWORD,
 	USER_FORM_SIGNUP_CHANGE_RE_PASSWORD,
 	USER_FORM_SIGNUP_VALIDATION_RE_PASSWORD,
-	USER_FORM_SIGNUP_CHANGE_ADDRESS
+	USER_FORM_SIGNUP_CHANGE_ADDRESS,
+	USER_FORM_SIGNUP_CHANGE_BIRTHDAY,
+	USER_FORM_SIGNUP_CLEAR
 } from '../types/formSignUp';
 
+import axios from 'axios';
+import Block from '../../common/components/block';
+import {push} from 'react-router-redux';
+
 export const userFormSignUpFocus = () => {
-	return {
-		type: USER_FORM_SIGNUP_FOCUS,
-		payload: true
-	};
+	return (dispatch, getState) => {
+		const {touched} = getState().userFormSignUp;
+		if(!touched)
+			dispatch({
+				type: USER_FORM_SIGNUP_FOCUS,
+				payload: true
+			});
+	}
 };
 
 export const userFormSignUpChangeFirstName = value => {
 	return dispatch => {
-		if(!is.empty(value)){
+		if(!is.empty(value))
 			if(value.length < 4)
 				dispatch(userFormSignUpValidationFirstName('global.error.min.length:4'));
 			else
 				dispatch(userFormSignUpValidationFirstName(''));
-		}else
+		else
 			dispatch(userFormSignUpValidationFirstName(''));
 
 		dispatch({
@@ -99,10 +109,12 @@ export const userFormSignUpChangePassword = value => {
 		else if(value.length < 6)
 			dispatch(userFormSignUpValidationPassword('global.error.min.length:6'));
 		else if(rePassword !== value){
-			dispatch(userFormSignUpValidationPassword(''));
 			dispatch(userFormSignUpValidationRePassword('global.error.re.password'));
-		}else
+			dispatch(userFormSignUpValidationPassword(''));
+		}else{
+			dispatch(userFormSignUpValidationPassword(''));
 			dispatch(userFormSignUpValidationRePassword(''));
+		}
 
 		dispatch({
 			type: USER_FORM_SIGNUP_CHANGE_PASSWORD,
@@ -122,12 +134,8 @@ export const userFormSignUpChangeRePassword = value => {
 	return (dispatch, getState) => {
 		const password = getState().userFormSignUp.values.password;
 
-		if(!is.empty(value)){
-			if(password !== value)
-				dispatch(userFormSignUpValidationRePassword('global.error.re.password'));
-			else
-				dispatch(userFormSignUpValidationRePassword(''));
-		}
+		if(password !== value)
+			dispatch(userFormSignUpValidationRePassword('global.error.re.password'));
 		else
 			dispatch(userFormSignUpValidationRePassword(''));
 
@@ -151,5 +159,84 @@ export const userFormSignUpChangeAddress = value => {
 			type: USER_FORM_SIGNUP_CHANGE_ADDRESS,
 			payload: value
 		});
+	};
+};
+
+export const userFormSignUpChangeBirthday = value => {
+	return {
+		type: USER_FORM_SIGNUP_CHANGE_BIRTHDAY,
+		payload: value
+	};
+};
+
+export const userFormSignUpStep1 = () => {
+	return (dispatch, getState) => {
+		return new Promise((resolve, reject) => {
+			const userFormSignUp = getState().userFormSignUp;
+			const {touched, values, errors} = userFormSignUp;
+
+			if(!touched)
+				dispatch(userFormSignUpFocus());
+
+			dispatch(userFormSignUpChangeFirstName(values.first_name));
+			dispatch(userFormSignUpChangeLastName(values.last_name));
+			dispatch(userFormSignUpChangeEmail(values.email));
+			dispatch(userFormSignUpChangeBirthday(values.birthday));
+			dispatch(userFormSignUpChangePassword(values.password));
+			dispatch(userFormSignUpChangeAddress(values.address));
+			resolve();
+		});
+	};
+};
+
+export const userFormSignUpStep2 = (element) => {
+	return (dispatch, getState) => {
+		const userFormSignUp = getState().userFormSignUp;
+		const {errors, values} = userFormSignUp;
+
+		if(!errors.email && !errors.password && !errors.password_retype
+			&& !errors.first_name && !errors.last_name
+			&& !errors.birthday && !errors.address){
+			Block.show(element);
+			setTimeout(() => {
+				axios.post('/authenticate/user/signup', values)
+				.then(data => {
+					const message = getState().intl.messages['page.user.signup.msg.success'];
+
+					toastr.success(message);
+					dispatch(push('/auth/user/signin'));
+					Block.hide(element);
+				})
+				.catch(error => {
+					if(error.response){
+						let message = '';
+						if(error.response.status === 401){
+							const errors = error.response.data;
+							for(let field in errors)
+								message = errors[field][0];
+						}else
+							message = error.response.data.message;
+						toastr.error(message);
+						Block.hide(element);
+					}
+				})
+			}, 2000);
+		}
+	};
+};
+
+export const userFormSignUpSubmit = (element) => {
+	return (dispatch) => {
+		dispatch(userFormSignUpStep1())
+		.then(() => {
+			dispatch(userFormSignUpStep2(element));
+		});
+	};
+};
+
+export const userFormSignUpClear = () => {
+	return {
+		type: USER_FORM_SIGNUP_CLEAR,
+		payload: true
 	};
 };

@@ -10,13 +10,15 @@ import {
 	USER_FORM_SIGNUP_VALIDATION_PASSWORD,
 	USER_FORM_SIGNUP_CHANGE_RE_PASSWORD,
 	USER_FORM_SIGNUP_VALIDATION_RE_PASSWORD,
-	USER_FORM_SIGNUP_CHANGE_ADDRESS
+	USER_FORM_SIGNUP_CHANGE_ADDRESS,
+	USER_FORM_SIGNUP_CHANGE_BIRTHDAY,
+	USER_FORM_SIGNUP_CLEAR
 } from '../types/formSignUp';
 
 import {DATE_NULL} from '../../common/config';
 
 const fields = {first_name: '', last_name: '', email: '', birthday: DATE_NULL, password: '', password_retype: '', address: ''};
-const INITIAL_STATE = {values: fields, errors: fields, touched: false};
+const INITIAL_STATE = {values: fields, errors: {...fields, birthday: ''}, touched: false};
 
 export default (state = INITIAL_STATE, action) => {
 	const {type, payload} = action;
@@ -45,6 +47,10 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, errors: {...state.errors, password_retype: payload}};
 		case USER_FORM_SIGNUP_CHANGE_ADDRESS:
 			return {...state, values: {...state.values, address: payload}};
+		case USER_FORM_SIGNUP_CHANGE_BIRTHDAY:
+			return {...state, values: {...state.values, birthday: payload}};
+		case USER_FORM_SIGNUP_CLEAR:
+			return {...state, ...INITIAL_STATE};
 	}
 	return state;
 };

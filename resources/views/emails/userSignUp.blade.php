@@ -1,0 +1,1 @@
+Send Email Successfully. Go to <a href="http://localhost/primaCare/public/api/authenticate/user/active/{{$token}}">Active</a>

@@ -19,14 +19,17 @@ const Lang = {
 			'global.error.re.password': 'Password Must Be The Same With Re Password',
 
 			'global.btn.forgot.password': 'Forgot Your Password ?',
+
 			//USER SIGN IN
 			'page.user.signin.title': 'User Sign In',
 			'page.user.signin.btn.submit': 'Sign In',
+			'page.user.signin.msg.success': 'Sign In Successfully',
 			
 			//USER SIGN UP
 			'page.user.signup.title': 'User Sign Up',
 			'page.user.signup.btn.new': 'Create New User',
-			'page.user.signup.btn.submit': 'Sign Up'
+			'page.user.signup.btn.submit': 'Sign Up',
+			'page.user.signup.msg.success': 'Sign Up Successfully'
 		}
 	}
 };

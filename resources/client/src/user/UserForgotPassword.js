@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux';
 import ScriptHOC from '../common/hoc/Script';
 import CSS from '../common/config/css';
 import JS from '../common/config/js';
-import Breadcrumb from '../app/breadcrumb';
+import Breadcrumb from '../app/Breadcrumb';
 
 class UserSignIn extends Component{
 	componentDidMount(){

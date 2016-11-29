@@ -18,7 +18,8 @@ class CreateClientsTable extends Migration
 
             $table->uuid('uid')->nullable();
             $table->uuid('user_uid')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('address')->nullable();
             $table->dateTime('birthday')->nullable();
 

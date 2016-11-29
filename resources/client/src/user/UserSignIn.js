@@ -3,7 +3,7 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import Breadcrumb from '../app/breadcrumb';
+import Breadcrumb from '../app/Breadcrumb';
 
 import * as UserFormSignIn from './actions/formSignIn';
 import {routerActions} from 'react-router-redux';
@@ -14,15 +14,10 @@ class UserSignIn extends Component{
 		this.props.userFormSignInSubmit(this.refs.login);
 	}
 	render(){
-		const breadcrumb = [
-			{name: this.props.intl.formatMessage({id: 'page.user.signin.title'})}
-		];
-
 		const {touched, errors} = this.props.userFormSignIn;
 
 		return (
 			<div className="mg-top-40">
-				<Breadcrumb values={breadcrumb}/>
 				<div className="tp-main-container">
 					<div className="container">
 						<div className="row">

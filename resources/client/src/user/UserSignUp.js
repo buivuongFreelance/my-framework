@@ -3,35 +3,39 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import Breadcrumb from '../app/breadcrumb';
 import {routerActions} from 'react-router-redux';
 import * as UserFormSignUp from './actions/formSignUp';
 
 import Datepicker from '../common/components/datepicker';
 
 class UserSignUp extends Component{
+	_onSubmitForm(e){
+		e.preventDefault();
+		this.props.userFormSignUpSubmit(this.refs.signup);
+	}
+	componentWillUnmount(){
+		this.props.userFormSignUpClear();
+	}
 	render(){
 		const breadcrumb = [
 			{name: this.props.intl.formatMessage({id: 'page.user.signup.title'})}
 		];
 
 		const {touched, errors} = this.props.userFormSignUp;
-
 		return (
 			<div className="mg-top-40">
-				<Breadcrumb values={breadcrumb}/>
 				<div className="tp-main-container">
 					<div className="container">
 						<div className="row">
 							<div className="col-md-12">
-								<div className="portlet box green">
+								<div className="portlet box green" ref="signup">
 									<div className="portlet-title">
 										<div className="caption">
 											<i className="fa fa-user"/> <FormattedMessage id="page.user.signup.title"/>
 										</div>
 									</div>
 									<div className="portlet-body form">
-										<form noValidation method="POST">
+										<form noValidation method="POST" onSubmit={this._onSubmitForm.bind(this)}>
 											<div className="form-body">
 												<div className="row">
 													<div className="col-md-6">
@@ -77,7 +81,8 @@ class UserSignUp extends Component{
 															<label className="control-label">
 																<FormattedMessage id="global.field.birthday.title"/>
 															</label>
-															<Datepicker/>
+															<Datepicker type="birthday"
+																onChange={(value) => this.props.userFormSignUpChangeBirthday(value)}/>
 														</div>
 													</div>
 												</div>

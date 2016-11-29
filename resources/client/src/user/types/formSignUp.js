@@ -10,3 +10,5 @@ export const USER_FORM_SIGNUP_VALIDATION_PASSWORD = 'userFormSignUpValidationPas
 export const USER_FORM_SIGNUP_CHANGE_RE_PASSWORD = 'userFormSignUpChangeRePassword';
 export const USER_FORM_SIGNUP_VALIDATION_RE_PASSWORD = 'userFormSignUpValidationRePassword';
 export const USER_FORM_SIGNUP_CHANGE_ADDRESS = 'userFormSignUpChangeAddress';
+export const USER_FORM_SIGNUP_CHANGE_BIRTHDAY = 'userFormSignUpChangeBirthday';
+export const USER_FORM_SIGNUP_CLEAR = 'userFormSignUpClear';

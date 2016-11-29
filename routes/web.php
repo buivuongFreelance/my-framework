@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 */
 Route::group(['prefix' => 'api'], function()
 {
-    Route::post('authenticate/client/login', 'AuthenticateController@clientLogin');
-    Route::post('authenticate/client/register', 'AuthenticateController@clientRegistration');
-    Route::get('authenticate/client/active/{token}', 'AuthenticateController@clientActive');
+    Route::post('authenticate/user/signin', 'AuthenticateController@userSignIn');
+    Route::post('authenticate/user/signup', 'AuthenticateController@userSignUp');
+    Route::get('authenticate/user/active/{token}', 'AuthenticateController@userActive');
 
     Route::post('client/detail', 'ClientController@detail');
     Route::post('client/edit', 'ClientController@edit');

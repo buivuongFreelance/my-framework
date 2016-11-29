@@ -87,10 +87,12 @@ export const userFormSignInStep2 = (element) => {
 		if(!errors.email && !errors.password){
 			Block.show(element);
 			setTimeout(() => {
-				axios.post('/authenticate/client/login', values)
+				axios.post('/authenticate/user/signin', values)
 				.then(data => {
-					console.log('success', data);
-					toastr.success('Login Successfully');
+					const message = getState().intl.messages['page.user.signin.msg.success'];
+
+					toastr.success(message);
+					dispatch(push('/auth/user/dashboard'));
 					Block.hide(element);
 				})
 				.catch(error => {

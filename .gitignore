@@ -5,4 +5,4 @@
 Homestead.json
 Homestead.yaml
 /resources/client/node_modules
-/public/js/bundle.js
+/public/js

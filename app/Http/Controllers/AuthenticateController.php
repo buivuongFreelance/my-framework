@@ -14,11 +14,11 @@ use Uuid;
 use ValidationException;
 use Validator;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ClientRegistration;
+use App\Mail\UserSignUp;
 
 class AuthenticateController extends Controller
 {
-    public function clientActive(Request $request, $token){
+    public function userActive(Request $request, $token){
         $user = User::where('remember_token', $token)->first();
 
         if($user){
@@ -33,7 +33,7 @@ class AuthenticateController extends Controller
         }
     }
 
-    public function clientLogin(Request $request){
+    public function userSignIn(Request $request){
         $all = $request->all();
         $validator = Validator::make($all, [
             'email' => 'required|email',
@@ -68,13 +68,13 @@ class AuthenticateController extends Controller
         return response()->json(['token' => $token, 'user' => $clientClaims]);
     }
 
-    public function clientRegistration(Request $request){
+    public function userSignUp(Request $request){
         $all = $request->all();
         $userUid = Uuid::generate();
         $clientUid = Uuid::generate();
 
         $validator = Validator::make($all, [
-            'name' => 'required|min:4',
+            'last_name' => 'required|min:4',
             'email' => 'required|unique:users,email|email',
             'password' => 'required|min:6'
         ]);
@@ -88,7 +88,6 @@ class AuthenticateController extends Controller
         try{
             $user = new User();
             $user->uid = $userUid;
-            $user->name = $all['name'];
             $user->email = $all['email'];
             $user->remember_token = Uuid::generate();
             $user->password = Hash::make($all['password']);
@@ -104,9 +103,10 @@ class AuthenticateController extends Controller
             $client = new Client();
             $client->uid = $clientUid;
             $client->user_uid = $userUid;
+            $client->first_name = $all['first_name'];
+            $client->last_name = $all['last_name'];
             $client->birthday = $all['birthday'];
             $client->address = $all['address'];
-            $client->phone = $all['phone'];
             $client->save();
         }catch(ValidationException $e){
             DB::rollback();
@@ -116,7 +116,7 @@ class AuthenticateController extends Controller
         }
         DB::commit();
 
-        Mail::to($all['email'])->send(new ClientRegistration( $all['name'], $user->remember_token ));
+        Mail::to($all['email'])->send(new UserSignUp($all['last_name'], $user->remember_token));
         return response()->json(['message'=>'success']);
     }
 }
