@@ -1,34 +1,33 @@
 import {
-	THEME_CONFIRM_SHOW,
-	THEME_CONFIRM_HIDE,
-	THEME_CONFIRM_ACCEPT,
-	THEME_CONFIRM_REJECT
+	THEME_NO_ACTION
 } from '../types';
 
-export const themeConfirmShow = () => {
+import Block from '../../common/components/block';
+
+export const themeShowLoadingEl = (element) => {
+	Block.show(element);
 	return {
-		type: THEME_CONFIRM_SHOW,
-		payload: true
+		type: THEME_NO_ACTION
 	};
 };
 
-export const themeConfirmHide = () => {
+export const themeHideLoadingEl = (element) => {
+	Block.hide(element);
 	return {
-		type: THEME_CONFIRM_HIDE,
-		payload: false
+		type: THEME_NO_ACTION
 	};
 };
 
-export const themeConfirmAccept = () => {
+export const themeShowSuccess = (message) => {
+	toastr.success(message);
 	return {
-		type: THEME_CONFIRM_ACCEPT,
-		payload: true
+		type: THEME_NO_ACTION
 	};
 };
 
-export const themeConfirmAccept = () => {
+export const themeShowError = (message) => {
+	toastr.error(message);
 	return {
-		type: THEME_CONFIRM_REJECT,
-		payload: false
+		type: THEME_NO_ACTION
 	};
 };

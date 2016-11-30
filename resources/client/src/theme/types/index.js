@@ -1,4 +1,1 @@
-//ACTIONS
-export const THEME_CONFIRM_SHOW = 'themeConfirmShow';
-export const THEME_CONFIRM_HIDE = 'themeConfirmHide';
-export const THEME_CONFIRM_ACCEPT = 'themeConfirmAccept';
+export const THEME_NO_ACTION = 'theme_no_action';

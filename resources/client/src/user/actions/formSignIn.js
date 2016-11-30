@@ -1,11 +1,14 @@
 import {
 	USER_FORM_SIGNIN_FOCUS,
-	USER_FORM_SIGNIN_CHANGE_EMAIL,
+	USER_FORM_SIGNIN_CHANGE,
 	USER_FORM_SIGNIN_VALIDATION_EMAIL,
-	USER_FORM_SIGNIN_CHANGE_PASSWORD,
 	USER_FORM_SIGNIN_VALIDATION_PASSWORD,
 	USER_FORM_SIGNIN_CLEAR
 } from '../types/formSignIn';
+
+import {
+	THEME_NO_ACTION
+} from '../../theme/types';
 
 import axios from 'axios';
 import Block from '../../common/components/block';
@@ -18,19 +21,10 @@ export const userFormSignInFocus = () => {
 	};
 };
 
-export const userFormSignInChangeEmail = value => {
-	return dispatch => {
-		if(is.empty(value))
-			dispatch(userFormSignInValidationEmail('global.error.required'));
-		else if(!is.email(value))
-			dispatch(userFormSignInValidationEmail('global.error.email'));
-		else
-			dispatch(userFormSignInValidationEmail(''));
-
-		dispatch({
-			type: USER_FORM_SIGNIN_CHANGE_EMAIL,
-			payload: value
-		});
+export const userFormSignInChange = (field, value) => {
+	return {
+		type: USER_FORM_SIGNIN_CHANGE,
+		payload: {field, value}
 	};
 };
 
@@ -38,22 +32,6 @@ export const userFormSignInValidationEmail = error => {
 	return {
 		type: USER_FORM_SIGNIN_VALIDATION_EMAIL,
 		payload: error
-	};
-};
-
-export const userFormSignInChangePassword = value => {
-	return dispatch => {
-		if(is.empty(value))
-			dispatch(userFormSignInValidationPassword('global.error.required'));
-		else if(value.length < 6)
-			dispatch(userFormSignInValidationPassword('global.error.min.length:6'));
-		else
-			dispatch(userFormSignInValidationPassword(''));
-
-		dispatch({
-			type: USER_FORM_SIGNIN_CHANGE_PASSWORD,
-			payload: value
-		});
 	};
 };
 
@@ -126,9 +104,31 @@ export const userFormSignInClear = () => {
 	return {
 		type: USER_FORM_SIGNIN_CLEAR,
 		payload: true
-	}
+	};
 };
 
-export const userBackendFormSignInSubmit = (element) => {
-
+export const userBackendFormSignInSubmit = (values) => {
+	return dispatch => {
+		return new Promise((resolve, reject) => {
+			setTimeout(()=>{
+				axios.post('/authenticate/admin/signin', values)
+				.then(response => {
+					dispatch({type: THEME_NO_ACTION});
+					resolve(response.data);
+				})
+				.catch(error => {
+					if(error.response){
+						let message = '';
+						if(error.response.status === 401){
+							const errors = error.response.data;
+							for(let field in errors)
+								message = errors[field][0];
+						}else
+							message = error.response.data.message;
+						reject(message);
+					}
+				});
+			}, 1500);
+		});
+	};
 };

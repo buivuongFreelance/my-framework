@@ -19,6 +19,8 @@ Route::group(['prefix' => 'api'], function()
 
     Route::post('client/detail', 'ClientController@detail');
     Route::post('client/edit', 'ClientController@edit');
+
+    Route::post('authenticate/admin/signin', 'AuthenticateController@adminSignIn');
 });
 
 Route::get('sendemail', function () {

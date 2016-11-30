@@ -1,8 +1,7 @@
 import {
 	USER_FORM_SIGNIN_FOCUS,
-	USER_FORM_SIGNIN_CHANGE_EMAIL,
+	USER_FORM_SIGNIN_CHANGE,
 	USER_FORM_SIGNIN_VALIDATION_EMAIL,
-	USER_FORM_SIGNIN_CHANGE_PASSWORD,
 	USER_FORM_SIGNIN_VALIDATION_PASSWORD,
 	USER_FORM_SIGNIN_CLEAR
 } from '../types/formSignIn';
@@ -15,12 +14,10 @@ export default (state = INITIAL_STATE, action) => {
 	switch(type){
 		case USER_FORM_SIGNIN_FOCUS:
 			return {...state, touched: true};
-		case USER_FORM_SIGNIN_CHANGE_EMAIL:
-			return {...state, values: {...state.values, email: payload}};
+		case USER_FORM_SIGNIN_CHANGE:
+			return {...state, values: {...state.values, [payload.field]: payload.value}};
 		case USER_FORM_SIGNIN_VALIDATION_EMAIL:
 			return {...state, errors: {...state.errors, email: payload}};
-		case USER_FORM_SIGNIN_CHANGE_PASSWORD:
-			return {...state, values: {...state.values, password: payload}};
 		case USER_FORM_SIGNIN_VALIDATION_PASSWORD:
 			return {...state, errors: {...state.errors, password: payload}};
 		case USER_FORM_SIGNIN_CLEAR:

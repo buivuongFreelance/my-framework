@@ -119,4 +119,39 @@ class AuthenticateController extends Controller
         Mail::to($all['email'])->send(new UserSignUp($all['first_name'].' '.$all['last_name'], $user->remember_token));
         return response()->json(['message'=>'success']);
     }
+
+    public function adminSignIn(Request $request){
+        $all = $request->all();
+        $validator = Validator::make($all, [
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 401);
+        }
+
+        $user = User::where('email', $all['email'])->where('role', 'admin')->first();
+        if(!$user)
+            return response()->json(['message' => 'Email you use do not have permission'], 500);
+        
+        if($user->status !== 'active')
+            return response()->json(['message' => 'Your Account Not Active. Please Check Your Email To Confirm'], 500);
+        
+        if(!Hash::check($all['password'], $user->password))
+            return response()->json(['message' => 'Your Password Wrong !!!'], 500);
+        
+        $adminClaims = ['email'=>$user->email, 'name'=>$user->name, 'role'=>$user->role];
+        $credentials = ['email'=>$user->email, 'password'=>$all['password']];
+
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['message' => 'invalid_credentials'], 500);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['message' => 'could_not_create_token'], 500);
+        }
+
+        return response()->json(['token' => $token, 'user' => $adminClaims]);
+    }
 }
