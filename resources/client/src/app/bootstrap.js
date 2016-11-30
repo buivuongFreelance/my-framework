@@ -25,14 +25,14 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk, loggerMiddleware, 
 const store = createStoreWithMiddleware(reducers);
 const history = syncHistoryWithStore(customHistory, store);
 
-import {USER_AUTH_SIGNIN} from '../user/types/auth';
+import {userAuthSignIn} from '../user/actions/auth';
 
 const token = localStorage.getItem('token');
 if(token){
 	const user = JSON.parse(localStorage.getItem('user'));
 	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-	//store.dispatch({type: USER_AUTH_SIGNIN, payload: user});
+	store.dispatch(userAuthSignIn(user));
 }
 
 import routes from './routes';

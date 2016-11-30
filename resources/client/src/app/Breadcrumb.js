@@ -1,32 +1,28 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+import {routerActions} from 'react-router-redux';
+import Routes from '../common/config/routes';
 
 class Breadcrumb extends Component{
 	render(){
 		return (
-			<div className="tp-page-header">
-				<div className="container">
-					<div className="row">
-						<div className="col-md-12 page-caption tp-breadcrumb">
-							<ol className="breadcrumb">
-								<li className="">
-									<a>Home</a>
-								</li>
-								{
-									this.props.values.map( (value, key) => {
-										return (
-											<li className="active" key={key}>
-												&nbsp;/&nbsp;{value.name}
-											</li>
-										);
-									})
-								}
-							</ol>
-						</div>
-					</div>
-				</div>
-			</div>
+			<ul className="page-breadcrumb breadcrumb">
+				<li>
+					<a onClick={()=>this.props.push(Routes.backend.dashboard)}>Dashboard</a>
+					<i className="fa fa-circle"/>
+				</li>
+				{this.props.children}
+			</ul>
 		);
 	}
 }
 
-export default Breadcrumb;
+const mapDispatchToProps = dispatch => {
+	return bindActionCreators({
+		...routerActions
+	}, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Breadcrumb);

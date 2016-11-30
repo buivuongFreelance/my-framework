@@ -8,7 +8,7 @@
 	<title>Primacare</title>
 
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
-	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}">
@@ -29,6 +29,12 @@
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/pages/css/login.min.css') }}">
 	<!-- END BEGIN PAGE LEVEL STYLES -->
 	<!--<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}">-->
+	<style type="text/css">
+		/* MUST RE DOING JAVASCRIPT */
+		.page-content{
+			min-height: 692px;
+		}
+	</style>
 	<!--<style type="text/css">
 		.page-header .page-header-menu{
 			background: #3fce92;

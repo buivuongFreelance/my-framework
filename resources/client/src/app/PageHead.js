@@ -2,16 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-class Footer extends Component{
+class PageHead extends Component{
 	render(){
 		return (
-			<div className="page-footer">
+			<div className="page-head">
 				<div className="container">
-					2016 © Primacare Theme
+					<div className="page-title">
+						<h1>{this.props.title}</h1>
+					</div>
 				</div>
 			</div>
 		);
 	};
 };
 
-export default Footer;
+export default PageHead;

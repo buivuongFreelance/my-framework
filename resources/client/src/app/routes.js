@@ -1,6 +1,7 @@
 import React from 'react';
-import {Route, IndexRoute} from 'react-router';
+import {Route} from 'react-router';
 import AppComponent from './App';
+import Routes from '../common/config/routes';
 
 /*import UserSignInComponent from '../user/UserSignIn';
 import UserSignUpComponent from '../user/UserSignUp';
@@ -26,14 +27,20 @@ const routes = (
 		</Route>
 	</Route>
 );*/
+import BackendUserAuthHoc from '../common/hoc/BackendUserAuth';
 
 import UserBackendSignInComponent from '../user/UserBackendSignIn';
+import DashboardViewComponent from '../dashboard/DashboardView';
+import DoctorViewComponent from '../doctor/DoctorView';
+import DoctorNewComponent from '../doctor/DoctorNew';
 
 const routes = (
 	<Route path="/" component={AppComponent}>
 		<Route path="backend">
-			<IndexRoute component={UserBackendSignInComponent}/>
-			<Route path="auth/user/signin" component={UserBackendSignInComponent}/>
+			<Route path={Routes.backend.signin} component={BackendUserAuthHoc(UserBackendSignInComponent)}/>
+			<Route path={Routes.backend.dashboard} component={BackendUserAuthHoc(DashboardViewComponent)}/>
+			<Route path={Routes.backend.doctorList} component={BackendUserAuthHoc(DoctorViewComponent)}/>
+			<Route path={Routes.backend.doctorNew} component={BackendUserAuthHoc(DoctorNewComponent)}/>
 		</Route>
 		{/*<Route path="auth">
 			<Route path="user">

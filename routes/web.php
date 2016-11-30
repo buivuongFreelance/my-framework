@@ -21,6 +21,8 @@ Route::group(['prefix' => 'api'], function()
     Route::post('client/edit', 'ClientController@edit');
 
     Route::post('authenticate/admin/signin', 'AuthenticateController@adminSignIn');
+
+    Route::post('doctor/list', 'DoctorController@doctorList');
 });
 
 Route::get('sendemail', function () {

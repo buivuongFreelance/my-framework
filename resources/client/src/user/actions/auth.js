@@ -3,36 +3,42 @@ import {
 	USER_AUTH_SIGNOUT
 } from '../types/auth';
 
+import {
+	THEME_NO_ACTION
+} from '../../theme/types';
+
 import axios from 'axios';
-import {push} from 'react-router-redux';
 
-export const userAuthSignIn = (token, user) => {
-	return dispatch => {
-		localStorage.setItem('token', token);
-		localStorage.setItem('user', JSON.stringify(user));
+export const userAuthAddToken = (token, user) => {
+	localStorage.setItem('token', token);
+	localStorage.setItem('user', JSON.stringify(user));
+	axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-		axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+	return {
+		type: THEME_NO_ACTION
+	};
+};
 
-		dispatch({
-			type: USER_AUTH_SIGNIN,
-			payload: user
-		});
-		dispatch(push('/auth/user/dashboard'));
+export const userAuthRemoveToken = () => {
+	localStorage.setItem('token', '');
+	localStorage.setItem('user', '');
+	axios.defaults.headers.common['Authorization'] = `Bearer `;
+
+	return {
+		type: THEME_NO_ACTION
+	};
+};
+
+export const userAuthSignIn = (user) => {
+	return{
+		type: USER_AUTH_SIGNIN,
+		payload: user
 	};
 };
 
 export const userAuthSignOut = () => {
-	return dispatch => {
-		localStorage.setItem('token', '');
-		localStorage.setItem('user', '');
-		axios.defaults.headers.common['Authorization'] = `Bearer `;
-
-		dispatch({
-			type: USER_AUTH_SIGNOUT,
-			payload: false
-		});
-
-		dispatch(push('/auth/user/signin'));
-		toastr.success('Logout User Successfully');
+	return{
+		type: USER_AUTH_SIGNOUT,
+		payload: false
 	};
 };

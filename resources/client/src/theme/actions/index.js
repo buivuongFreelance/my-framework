@@ -31,3 +31,31 @@ export const themeShowError = (message) => {
 		type: THEME_NO_ACTION
 	};
 };
+
+export const themeAddBodyLogin = () => {
+	$('body').addClass('login');
+	return {
+		type: THEME_NO_ACTION
+	};
+};
+
+export const themeRemoveBodyLogin = () => {
+	$('body').removeClass('login');
+	return {
+		type: THEME_NO_ACTION
+	};
+};
+
+export const themeAddBodyMain = () => {
+	$('body').addClass('page-container-bg-solid');
+	return {
+		type: THEME_NO_ACTION
+	};
+};
+
+export const themeRemoveBodyMain = () => {
+	$('body').removeClass('page-container-bg-solid');
+	return {
+		type: THEME_NO_ACTION
+	};
+};

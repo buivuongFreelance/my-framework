@@ -2,17 +2,21 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as UserFormSignInActions from './actions/formSignIn';
 import * as ThemeActions from '../theme/actions';
+import * as UserFormSignInActions from './actions/formSignIn';
+import * as UserAuthActions from './actions/auth';
+import {routerActions} from 'react-router-redux';
+import Routes from '../common/config/routes';
 
 class UserBackendSignIn extends Component{
 	componentWillMount(){
-		$('body').removeClass('page-container-bg-solid');
-		$('body').addClass('login');
+		this.props.themeRemoveBodyMain();
+		this.props.themeAddBodyLogin();
 	}
 	componentWillUnmount(){
-		$('body').removeClass('login');
-		$('body').addClass('page-container-bg-solid');
+		this.props.themeRemoveBodyLogin();
+		this.props.themeAddBodyMain();
+		this.props.userFormSignInClear();
 	}
 	_onSubmit(event){
 		event.preventDefault();
@@ -21,8 +25,11 @@ class UserBackendSignIn extends Component{
 		this.props.themeShowLoadingEl(this.refs.login);
 		this.props.userBackendFormSignInSubmit(this.props.userFormSignIn.values)
 		.then(data => {
+			_this.props.userAuthAddToken(data.token, data.user);
+			_this.props.userAuthSignIn(data.user);
 			_this.props.themeHideLoadingEl(_this.refs.login);
 			_this.props.themeShowSuccess('Sign In Successfully');
+			_this.props.push(Routes.backend.dashboard);
 		})
 		.catch(message => {
 			_this.props.themeHideLoadingEl(_this.refs.login);
@@ -66,8 +73,10 @@ const mapStateToProps = ({userFormSignIn}) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
+		...ThemeActions,
 		...UserFormSignInActions,
-		...ThemeActions
+		...UserAuthActions,
+		...routerActions
 	}, dispatch);
 };
 
