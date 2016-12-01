@@ -1,0 +1,1 @@
+export const DOCTOR_FORM_AVATAR_CHANGE = 'doctorFormAvatarChange';

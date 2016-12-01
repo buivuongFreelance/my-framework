@@ -59,3 +59,10 @@ export const themeRemoveBodyMain = () => {
 		type: THEME_NO_ACTION
 	};
 };
+
+export const themeAddTabActive = (element) => {
+	$(element).addClass('active');
+	return {
+		type: THEME_NO_ACTION
+	};
+};

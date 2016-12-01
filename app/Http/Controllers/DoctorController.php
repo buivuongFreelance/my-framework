@@ -13,9 +13,32 @@ use Validator;
 
 class DoctorController extends Controller
 {
+    public function doctorUpAvatar(Request $request){
+        $file = $request->file->store('images');
+
+        return response()->json(['file' => $file]);
+    }
+
     public function doctorList(Request $request){
+        $doctors = User::where('status', 'active')
+                ->where('role', 'doctor')
+                ->with('doctor')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+        return response()->json($doctors);
+    }
+
+    public function doctorDetail(Request $request){
         $all = $request->all();
-        return response()->json($all);
+
+        $doctor = User::where('status', 'active')
+                ->where('role', 'doctor')
+                ->where('uid', $all['uid'])
+                ->with('doctor')
+                ->first();
+
+        return response()->json($doctor);
     }
 
     public function doctorCreate(Request $request){

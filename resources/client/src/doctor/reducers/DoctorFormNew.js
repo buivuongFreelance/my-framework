@@ -1,7 +1,8 @@
 import {
 	DOCTOR_FORM_NEW_FOCUS,
 	DOCTOR_FORM_NEW_CHANGE,
-	DOCTOR_FORM_NEW_VALIDATION
+	DOCTOR_FORM_NEW_VALIDATION,
+	DOCTOR_FORM_NEW_CLEAR
 } from '../types/formNew';
 
 import {DATE_NULL} from '../../common/config';
@@ -18,6 +19,8 @@ export default (state = INITIAL_STATE, action) => {
 			return {...state, values: {...state.values, [payload.field]: payload.value}};
 		case DOCTOR_FORM_NEW_VALIDATION:
 			return {...state, errors: {...payload}};
+		case DOCTOR_FORM_NEW_CLEAR:
+			return {...state, ...INITIAL_STATE};
 	}
 	return state;
 };

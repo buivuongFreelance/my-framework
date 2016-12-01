@@ -13,6 +13,9 @@ import {routerActions} from 'react-router-redux';
 import Routes from '../common/config/routes';
 
 class DoctorNew extends Component{
+	componentWillUnmount(){
+		this.props.doctorFormNewClear();
+	}
 	_onFocusField(){
 		if(!this.props.doctorFormNew.touched)
 			this.props.doctorFormNewFocus();
@@ -40,7 +43,6 @@ class DoctorNew extends Component{
 				break;
 			case 'password':
 				const password_retype = this.props.doctorFormNew.values.password_retype;
-
 				if(is.empty(value))
 					errors.password = 'Password Required.';
 				else if(value.length < 6)

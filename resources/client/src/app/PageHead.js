@@ -10,6 +10,9 @@ class PageHead extends Component{
 					<div className="page-title">
 						<h1>{this.props.title}</h1>
 					</div>
+					<div className="page-toolbar">
+						{this.props.children}
+					</div>
 				</div>
 			</div>
 		);

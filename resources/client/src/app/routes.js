@@ -33,6 +33,7 @@ import UserBackendSignInComponent from '../user/UserBackendSignIn';
 import DashboardViewComponent from '../dashboard/DashboardView';
 import DoctorViewComponent from '../doctor/DoctorView';
 import DoctorNewComponent from '../doctor/DoctorNew';
+import DoctorEditAvatarComponent from '../doctor/DoctorEditAvatar';
 
 const routes = (
 	<Route path="/" component={AppComponent}>
@@ -41,6 +42,7 @@ const routes = (
 			<Route path={Routes.backend.dashboard} component={BackendUserAuthHoc(DashboardViewComponent)}/>
 			<Route path={Routes.backend.doctorList} component={BackendUserAuthHoc(DoctorViewComponent)}/>
 			<Route path={Routes.backend.doctorNew} component={BackendUserAuthHoc(DoctorNewComponent)}/>
+			<Route path={Routes.backend.doctorEditAvatar} component={BackendUserAuthHoc(DoctorEditAvatarComponent)}/>
 		</Route>
 		{/*<Route path="auth">
 			<Route path="user">

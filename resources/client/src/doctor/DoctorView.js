@@ -7,12 +7,31 @@ import Breadcrumb from '../app/Breadcrumb';
 import PageContent from '../app/PageContent';
 
 import * as DoctorActions from './actions/view';
+import * as ThemeActions from '../theme/actions';
 import {routerActions} from 'react-router-redux';
 import Routes from '../common/config/routes';
 
+import {DEFAULT_URL} from '../common/config';
+
 class DoctorView extends Component{
 	componentDidMount(){
-		this.props.doctorBackendLoadList();
+		let _this = this;
+
+		this.props.themeShowLoadingEl(this.refs.list);
+		this.props.doctorViewLoadList()
+		.then(data => {
+			_this.props.themeHideLoadingEl(_this.refs.list);
+		})
+		.catch(message => {
+			_this.props.themeHideLoadingEl(_this.refs.list);
+			_this.props.themeShowError(message);
+		});
+	}
+	_onGoToDetail(doctor){
+		this.props.push({
+			pathname: Routes.backend.doctorEditAvatar,
+			query: {uid: doctor.uid}
+		});
 	}
 	render(){
 		return(
@@ -28,7 +47,7 @@ class DoctorView extends Component{
 						<div className="row">
 							<div className="col-md-12">
 								
-								<div className="portlet box blue-hoki">
+								<div className="portlet light portlet-fit" ref="list">
 									<div className="portlet-title">
 										<div className="caption">
 											Doctor List
@@ -38,6 +57,35 @@ class DoctorView extends Component{
 												onClick={()=>this.props.push(Routes.backend.doctorNew)}>
 												<i className="fa fa-plus"/> New Doctor
 											</a>
+										</div>
+									</div>
+									<div className="portlet-body">
+										<div className="mt-element-card mt-card-round mt-element-overlay">
+											<div className="row">
+												{
+													this.props.doctors.list.map(doctor => {
+														return (
+															<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={doctor.uid}>
+																<div className="mt-card-item">
+																	<div className="mt-card-avatar mt-overlay-1">
+																		<img src={doctor.doctor.avatar ? DEFAULT_URL+'/images/'+doctor.doctor.avatar: DEFAULT_URL+'/images/no_avatar.png'}/>
+																	</div>
+																	<div className="mt-card-content">
+																		<h3 className="mt-card-name">{`${doctor.doctor.first_name} ${doctor.doctor.last_name}`}</h3>
+																		<p className="mt-card-desc font-grey-mint">{doctor.email}</p>
+																	</div>
+																	<div className="mt-card-content">
+																		<button className="btn btn-sm btn-primary">View</button>
+																		&nbsp;
+																		<button className="btn btn-sm btn-default"
+																			onClick={this._onGoToDetail.bind(this, doctor)}>Edit</button>
+																	</div>
+																</div>
+															</div>
+														);
+													})
+												}
+											</div>
 										</div>
 									</div>
 								</div>
@@ -51,11 +99,16 @@ class DoctorView extends Component{
 	};
 };
 
+const mapStateToProps = ({doctors}) => {
+	return {doctors};
+};
+
 const mapDispatchToProps = dispatch => {
 	return bindActionCreators({
 		...DoctorActions,
+		...ThemeActions,
 		...routerActions
 	}, dispatch);
 };
 
-export default connect(null, mapDispatchToProps)(DoctorView);
+export default connect(mapStateToProps, mapDispatchToProps)(DoctorView);

@@ -7,10 +7,10 @@ import Routes from '../../common/config/routes';
 
 const Auth = ComposedComponent => {
     class Authentication extends Component{
-    	componentWillMount(){
+    	componentDidMount(){
     		this._checkBeforeGoRoute();
     	}
-    	componentWillUpdate(){
+    	componentDidUpdate(){
             this._checkBeforeGoRoute();
     	}
         _checkBeforeGoRoute(){

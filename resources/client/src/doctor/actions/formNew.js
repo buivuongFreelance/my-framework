@@ -1,10 +1,12 @@
 import {
 	DOCTOR_FORM_NEW_FOCUS,
 	DOCTOR_FORM_NEW_CHANGE,
-	DOCTOR_FORM_NEW_VALIDATION
+	DOCTOR_FORM_NEW_VALIDATION,
+	DOCTOR_FORM_NEW_CLEAR
 } from '../types/formNew';
 
 import axios from 'axios';
+import API from '../../common/config/api';
 
 export const doctorFormNewFocus = () => {
 	return {
@@ -31,7 +33,7 @@ export const doctorFormNewSubmit = (values) => {
 	return dispatch => {
 		return new Promise((resolve, reject) => {
 			setTimeout(()=>{
-				axios.post('/doctor/create', values)
+				axios.post(API.backend.doctor.create, values)
 				.then(response => {
 					resolve(response.data);
 					dispatch({type: THEME_NO_ACTION});
@@ -50,5 +52,12 @@ export const doctorFormNewSubmit = (values) => {
 				});
 			}, 1500);
 		});
+	};
+};
+
+export const doctorFormNewClear = () => {
+	return {
+		type: DOCTOR_FORM_NEW_CLEAR,
+		payload: false
 	};
 };

@@ -1,17 +1,73 @@
 import {
-	THEME_NO_ACTION
-} from '../../theme/types';
+	DOCTOR_VIEW_LOAD_LIST,
+	DOCTOR_VIEW_DETAIL
+} from '../types/view';
+
+import {THEME_NO_ACTION} from '../../theme/actions';
 
 import axios from 'axios';
+import API from '../../common/config/api';
 
-export const doctorBackendLoadList = () => {
+export const doctorViewLoadList = () => {
 	return dispatch => {
 		return new Promise((resolve, reject) => {
 			setTimeout(()=>{
-				axios.post('/doctor/list')
+				axios.post(API.backend.doctor.view)
 				.then(response => {
-					dispatch({type: THEME_NO_ACTION});
 					resolve(response.data);
+					dispatch({type: DOCTOR_VIEW_LOAD_LIST, payload: response.data});
+				})
+				.catch(error => {
+					if(error.response){
+						let message = '';
+						if(error.response.status === 401){
+							const errors = error.response.data;
+							for(let field in errors)
+								message = errors[field][0];
+						}else
+							message = error.response.data.message;
+						reject(message);
+					}
+				});
+			}, 1500);
+		});
+	};
+};
+
+export const doctorViewDetail = (uid) => {
+	return dispatch => {
+		return new Promise((resolve, reject) => {
+			setTimeout(()=>{
+				axios.post(API.backend.doctor.detail, {uid})
+				.then(response => {
+					resolve(response.data);
+					dispatch({type: DOCTOR_VIEW_DETAIL, payload: response.data});
+				})
+				.catch(error => {
+					if(error.response){
+						let message = '';
+						if(error.response.status === 401){
+							const errors = error.response.data;
+							for(let field in errors)
+								message = errors[field][0];
+						}else
+							message = error.response.data.message;
+						reject(message);
+					}
+				});
+			}, 1500);
+		});
+	};
+};
+
+export const doctorViewUpAvatar = (data) => {
+	return dispatch => {
+		return new Promise((resolve, reject) => {
+			setTimeout(()=>{
+				axios.post(API.backend.doctor.upAvatar, data)
+				.then(response => {
+					resolve(response.data);
+					dispatch({type: DOCTOR_VIEW_DETAIL, payload: response.data});
 				})
 				.catch(error => {
 					if(error.response){
