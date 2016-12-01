@@ -21,7 +21,7 @@ const customHistory = useRouterHistory(createHistory)({
 });
 
 const routingMiddleware = routerMiddleware(customHistory);
-const createStoreWithMiddleware = applyMiddleware(reduxThunk, loggerMiddleware, routingMiddleware)(createStore);
+const createStoreWithMiddleware = applyMiddleware(reduxThunk, routingMiddleware)(createStore);
 const store = createStoreWithMiddleware(reducers);
 const history = syncHistoryWithStore(customHistory, store);
 

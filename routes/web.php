@@ -23,24 +23,7 @@ Route::group(['prefix' => 'api'], function()
     Route::post('authenticate/admin/signin', 'AuthenticateController@adminSignIn');
 
     Route::post('doctor/list', 'DoctorController@doctorList');
-});
-
-Route::get('sendemail', function () {
-
-    $data = array(
-        'name' => "Learning Laravel",
-    );
-
-    Mail::send('emails.welcome', $data, function ($message) {
-
-        $message->from('buivuongdhmo@gmail.com', 'Learning Laravel');
-
-        $message->to('buivuongdhmo@gmail.com')->subject('Learning Laravel test email');
-
-    });
-
-    return "Your email has been sent successfully";
-
+    Route::post('doctor/create', 'DoctorController@doctorCreate');
 });
 
 Route::get('{all?}', function ($url) {

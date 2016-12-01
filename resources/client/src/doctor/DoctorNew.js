@@ -8,6 +8,7 @@ import PageContent from '../app/PageContent';
 import Datepicker from '../common/components/datepicker';
 
 import * as DoctorFormNewActions from './actions/formNew';
+import * as ThemeActions from '../theme/actions';
 import {routerActions} from 'react-router-redux';
 import Routes from '../common/config/routes';
 
@@ -73,27 +74,38 @@ class DoctorNew extends Component{
 	}
 	_onSubmit(event){
 		event.preventDefault();
-		this._onFocusField();
-
-		
-
-		this._onChangeField('email', '');
-		this._onChangeField('last_name', '');
-
-		const errors = this.props.doctorFormNew.errors;
-		let valid = true;
-		for(let field in errors){
-			let error = errors[field];
-			if(error){
-				valid = false;
-				break;
+		let _this = this;
+		setTimeout(() => {
+			_this._onFocusField();
+			const values = this.props.doctorFormNew.values;
+			for(let field in values){
+				let value = values[field];
+				_this._onChangeField(field, value);
 			}
-		}
 
-		if(valid){
-			console.log('asassaass');
-		}
-
+			const errors = this.props.doctorFormNew.errors;
+			let valid = true;
+			for(let field in errors){
+				let error = errors[field];
+				if(error){
+					valid = false;
+					break;
+				}
+			}
+			if(valid){
+				_this.props.themeShowLoadingEl(_this.refs.form);
+				_this.props.doctorFormNewSubmit(values)
+				.then(data => {
+					_this.props.themeHideLoadingEl(_this.refs.form);
+					_this.props.themeShowSuccess('Create New Doctor Successfully');
+					_this.props.push(Routes.backend.doctorList);
+				})
+				.catch(message => {
+					_this.props.themeHideLoadingEl(_this.refs.form);
+					_this.props.themeShowError(message);
+				});
+			}
+		}, 0);
 	}
 	render(){
 		const {touched, errors} = this.props.doctorFormNew;
@@ -114,7 +126,7 @@ class DoctorNew extends Component{
 						<div className="row">
 							<div className="col-md-12">
 								
-								<div className="portlet box blue-hoki">
+								<div className="portlet box blue-hoki" ref="form">
 									<div className="portlet-title">
 										<div className="caption">
 											Add A New Doctor
@@ -304,7 +316,8 @@ const mapStateToProps = ({doctorFormNew}) => {
 const mapDispatchToProps = dispatch => {
 	return bindActionCreators({
 		...routerActions,
-		...DoctorFormNewActions
+		...DoctorFormNewActions,
+		...ThemeActions
 	}, dispatch);
 };
 

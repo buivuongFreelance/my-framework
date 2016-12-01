@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Client;
+use App\Doctor;
 use DB;
 use Hash;
 use Uuid;
@@ -15,7 +15,59 @@ class DoctorController extends Controller
 {
     public function doctorList(Request $request){
         $all = $request->all();
-
         return response()->json($all);
-    }    
+    }
+
+    public function doctorCreate(Request $request){
+    	$all = $request->all();
+    	$userUid = Uuid::generate();
+    	$doctorUid = Uuid::generate();
+
+    	$validator = Validator::make($all, [
+    		'last_name' => 'required|min:2',
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if($validator->fails())
+            return response()->json($validator->errors(), 401);
+
+        DB::beginTransaction();
+        try{
+            $user = new User();
+            $user->uid = $userUid;
+            $user->email = $all['email'];
+            $user->password = Hash::make($all['password']);
+            $user->status = 'active';
+            $user->role = 'doctor';
+            $user->save();
+        }catch(ValidationException $e){
+            DB::rollback();
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+
+        try{
+            $doctor = new Doctor();
+            $doctor->uid = $doctorUid;
+            $doctor->user_uid = $userUid;
+            $doctor->first_name = $all['first_name'];
+            $doctor->last_name = $all['last_name'];
+            $doctor->birthday = $all['birthday'];
+            $doctor->address = $all['address'];
+            $doctor->phone = $all['phone'];
+            $doctor->job_title = $all['job_title'];
+            $doctor->description = $all['description'];
+            $doctor->save();
+        }catch(ValidationException $e){
+            DB::rollback();
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+        DB::commit();
+
+    	return response()->json(['message'=>'success']);
+    }
 }

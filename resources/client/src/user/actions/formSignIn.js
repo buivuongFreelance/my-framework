@@ -113,8 +113,8 @@ export const userBackendFormSignInSubmit = (values) => {
 			setTimeout(()=>{
 				axios.post('/authenticate/admin/signin', values)
 				.then(response => {
-					dispatch({type: THEME_NO_ACTION});
 					resolve(response.data);
+					dispatch({type: THEME_NO_ACTION});
 				})
 				.catch(error => {
 					if(error.response){
