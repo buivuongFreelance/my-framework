@@ -14,9 +14,15 @@ use Validator;
 class DoctorController extends Controller
 {
     public function doctorUpAvatar(Request $request){
-        $file = $request->file->store('images');
-
-        return response()->json(['file' => $file]);
+        try{
+            $path = $request->image->store('public/avatars');
+        }catch(\Exception $e){
+            return response()->json(['message' => 'Cannot Upload Image'], 500);
+        }
+        $pathName = str_replace('public/', '', $path);
+        $doctor = Doctor::where('user_uid', $request->uid)
+                ->update(['avatar' => $pathName]);
+        return response()->json(['message' => 'success']);
     }
 
     public function doctorList(Request $request){
@@ -48,7 +54,7 @@ class DoctorController extends Controller
 
     	$validator = Validator::make($all, [
     		'last_name' => 'required|min:2',
-            'email' => 'required|email',
+            'email' => 'required|unique:users,email|email',
             'password' => 'required|min:6'
         ]);
 
@@ -92,5 +98,28 @@ class DoctorController extends Controller
         DB::commit();
 
     	return response()->json(['message'=>'success']);
+    }
+
+    public function doctorUpdate(Request $request){
+        $all = $request->all();
+
+        $validator = Validator::make($all, [
+            'last_name' => 'required|min:2'
+        ]);
+
+        if($validator->fails())
+            return response()->json($validator->errors(), 401);
+
+        $doctor = Doctor::where('user_uid', $all['user_uid'])
+            ->update([
+                'first_name' => $all['first_name'],
+                'last_name' => $all['last_name'],
+                'birthday' => $all['birthday'],
+                'phone' => $all['phone'],
+                'address' => $all['address'],
+                'job_title' => $all['job_title'],
+                'description' => $all['description']
+            ]);
+        return response()->json(['message' => 'success']);
     }
 }

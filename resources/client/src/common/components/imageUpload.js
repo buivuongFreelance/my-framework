@@ -28,13 +28,13 @@ class Datepicker extends Component{
 	_init(){
 		let _this = this;
 		if(!this.loaded){
+			let control = $(this.refs.file);
 			$(this.refs.file).on('change', () => {
 				_this.file = _this.refs.file.files[0];
 				_this.props.onChange(_this.file);
-				/*let data = new FormData();
-				data.append('file', file);
-
-				_this.props.doctorViewUpAvatar(data);*/
+				control.replaceWith(
+					control = control.clone(true)
+				);
 			});
 			this.loaded = true;
 		}
@@ -43,14 +43,14 @@ class Datepicker extends Component{
 		return (
 			<div className="fileinput fileinput-new" data-provides="fileinput">
 				<div className="fileinput-new thumbnail" style={{width: '200px', height: '150px'}}>
-					<img src={DEFAULT_URL+'/images/no_avatar.png'}/>
+					<img src={this.props.imagePreview ? DEFAULT_URL+'/storage/'+this.props.imagePreview: DEFAULT_URL+'/images/no_avatar.png'} accept="image/*"/>
 				</div>
 				<div className="fileinput-preview fileinput-exists thumbnail" style={{width: '200px', height: '150px'}}/>
 				<div>
 					<span className="btn red btn-outline btn-file">
 						<span className="fileinput-new">Select Image</span>
 						<span className="fileinput-exists">Change</span>
-						<input type="file" name="..." ref="file"/>
+						<input type="file" name="..." ref="file" accept="image/*"/>
 					</span>
 					&nbsp;
 					<a href="javascript:;" className="btn red fileinput-exists" data-dismiss="fileinput">Remove</a>

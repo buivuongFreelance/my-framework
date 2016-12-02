@@ -21,7 +21,7 @@ class DoctorNew extends Component{
 			this.props.doctorFormNewFocus();
 	}
 	_onChangeField(field, event){
-		const value = !is.string(event) ? event.target.value : event;
+		const value = (!is.string(event) && event) ? event.target.value : event;
 		let errors = Object.assign({}, this.props.doctorFormNew.errors);
 		switch(field){
 			case 'first_name':

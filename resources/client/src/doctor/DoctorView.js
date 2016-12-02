@@ -68,7 +68,8 @@ class DoctorView extends Component{
 															<div className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={doctor.uid}>
 																<div className="mt-card-item">
 																	<div className="mt-card-avatar mt-overlay-1">
-																		<img src={doctor.doctor.avatar ? DEFAULT_URL+'/images/'+doctor.doctor.avatar: DEFAULT_URL+'/images/no_avatar.png'}/>
+																		<img src={doctor.doctor.avatar ? DEFAULT_URL+'/storage/'+doctor.doctor.avatar: DEFAULT_URL+'/images/no_avatar.png'}
+																			style={{width: '170px', height: '170px'}}/>
 																	</div>
 																	<div className="mt-card-content">
 																		<h3 className="mt-card-name">{`${doctor.doctor.first_name} ${doctor.doctor.last_name}`}</h3>

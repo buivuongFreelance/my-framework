@@ -6,12 +6,15 @@ import PageHead from '../app/PageHead';
 import Breadcrumb from '../app/Breadcrumb';
 import PageContent from '../app/PageContent';
 import ImageUpload from '../common/components/imageUpload';
+import TabEdit from './partials/tabEdit';
 
 import * as ThemeActions from '../theme/actions';
 import * as DoctorViewActions from './actions/view';
-import * as Doctor
+import * as DoctorFormAvatarActions from './actions/formAvatar';
 import {routerActions} from 'react-router-redux';
 import Routes from '../common/config/routes';
+
+import {DEFAULT_URL} from '../common/config';
 
 class DoctorEdit extends Component{
 	componentDidMount(){
@@ -30,9 +33,21 @@ class DoctorEdit extends Component{
 	}
 	_uploadAvatar(event){
 		event.preventDefault();
-		console.log(this.refs.imageUpload);
-		const image = this.refs.imageUpload.getImage();
-		console.log(image);
+		let _this = this;
+		let data = new FormData();
+		data.append('image', this.props.doctorFormAvatar.values.avatar);
+		data.append('uid', this.props.location.query.uid);
+		this.props.themeShowLoadingEl(this.refs.form);
+		this.props.doctorFormAvatarUpload(data)
+		.then(data => {
+			_this.props.themeHideLoadingEl(_this.refs.form);
+			_this.props.themeShowSuccess('Upload Doctor Avatar Successfully');
+			_this.props.push(Routes.backend.doctorList);
+		})
+		.catch(message => {
+			_this.props.themeHideLoadingEl(_this.refs.form);
+			_this.props.themeShowError(message);
+		});
 	}
 	render(){
 		return (
@@ -53,17 +68,7 @@ class DoctorEdit extends Component{
 							<div className="col-md-12">
 								
 								<div className="tabbable-line boxless tabbable-reversed">
-									<ul className="nav nav-tabs">
-										<li ref="avatar" className="active">
-											<a> Avatar</a>
-										</li>
-										<li ref="form">
-											<a> Edit Information</a>
-										</li>
-										<li ref="uploads">
-											<a> Other Images</a>
-										</li>
-									</ul>
+									<TabEdit uid={this.props.location.query.uid} active="avatar"/>
 									<div className="tab-content">
 										<div className="tab-pane active">
 											<div className="portlet box blue-hoki" ref="form">
@@ -82,7 +87,9 @@ class DoctorEdit extends Component{
 																		Avatar
 																	</label>
 																	<div className="col-md-9">
-																		<ImageUpload ref="imageUpload"/>
+																		<ImageUpload ref="imageUpload" 
+																			imagePreview={this.props.doctor.avatar}
+																			onChange={value => this.props.doctorFormAvatarChange('avatar', value)}/>
 																	</div>
 																</div>
 															</div>
@@ -122,14 +129,15 @@ class DoctorEdit extends Component{
 	}
 };
 
-const mapStateToProps = ({doctor}) => {
-	return {doctor};
+const mapStateToProps = ({doctor, doctorFormAvatar}) => {
+	return {doctor, doctorFormAvatar};
 };
 
 const mapDispatchToProps = dispatch => {
 	return bindActionCreators({
 		...ThemeActions,
 		...DoctorViewActions,
+		...DoctorFormAvatarActions,
 		...routerActions
 	}, dispatch);
 };

@@ -3,7 +3,7 @@ import {
 } from '../types/view';
 
 import {DATE_NULL} from '../../common/config';
-const INITIAL_STATE = {uid: '', email: '', user_uid: '', avatar: '', first_name: '', last_name: '', phone: '', address: '', job_title: '', description: '', birthday: ''};
+const INITIAL_STATE = {uid: '', email: '', user_uid: '', avatar: '', first_name: '', last_name: '', phone: '', address: '', job_title: '', description: '', birthday: '', avatar: ''};
 
 export default (state = INITIAL_STATE, action) => {
 	const {type, payload} = action;

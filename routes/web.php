@@ -24,6 +24,7 @@ Route::group(['prefix' => 'api'], function()
 
     Route::post('doctor/list', 'DoctorController@doctorList');
     Route::post('doctor/create', 'DoctorController@doctorCreate');
+    Route::post('doctor/update', 'DoctorController@doctorUpdate');
     Route::post('doctor/detail', 'DoctorController@doctorDetail');
     Route::post('doctor/upAvatar', 'DoctorController@doctorUpAvatar');
 });

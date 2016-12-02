@@ -7,6 +7,7 @@ const API = {
 			view: '/doctor/list',
 			create: '/doctor/create',
 			detail: '/doctor/detail',
+			update: '/doctor/update',
 			upAvatar: '/doctor/upAvatar'
 		}
 	}

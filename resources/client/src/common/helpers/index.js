@@ -1,4 +1,4 @@
-import {DEFAULT_DATE} from '../config';
+import {DATE_NULL} from '../config';
 
 export const GetFormValues = (values) => {
 	let formArr = {};
@@ -39,7 +39,7 @@ export const GetValidationField = (field, errors, reducer, state) => {
 };
 
 export const DisplayDate = (date) => {
-	if(date == DEFAULT_DATE){
+	if(date === DATE_NULL){
 		return '';
 	}
 	if(is.empty(date))

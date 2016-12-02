@@ -11,6 +11,7 @@ import {
 } from '../../theme/types';
 
 import axios from 'axios';
+import {TIMEOUT} from '../../common/config';
 import API from '../../common/config/api';
 
 export const userFormSignInFocus = () => {
@@ -55,7 +56,7 @@ export const userBackendFormSignInSubmit = (values) => {
 						reject(message);
 					}
 				});
-			}, 1500);
+			}, TIMEOUT);
 		});
 	};
 };

@@ -2,7 +2,7 @@ import {
 	DOCTOR_FORM_AVATAR_CHANGE
 } from '../types/formAvatar';
 
-const fields = {avatar: ''};
+const fields = {avatar: null};
 const INITIAL_STATE = {values: fields, errors: fields, touched: false};
 
 export default (state = INITIAL_STATE, action) => {
