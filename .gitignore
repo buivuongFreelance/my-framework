@@ -1,5 +1,8 @@
 /node_modules
-/public/storage
+/storage/framework
+/storage/logs
+/storage/oauth-private.key
+/storage/oauth-public.key
 /vendor
 /.idea
 Homestead.json
