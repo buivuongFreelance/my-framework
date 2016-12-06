@@ -1,0 +1,9 @@
+export const PAGE_VIEW_LOAD_LIST = 'pageViewLoadList';
+export const PAGE_VIEW_CLEAR = 'pageViewClear';
+export const PAGE_VIEW_DETAIL = 'pageViewDetail';
+export const PAGE_VIEW_CHANGE_PAGE = 'pageViewChangePage';
+export const PAGE_VIEW_TOGGLE_SEARCH = 'pageViewToggleSearch';
+export const PAGE_VIEW_CHANGE_SEARCH = 'pageViewChangeSearch';
+export const PAGE_VIEW_RESET_SEARCH = 'pageViewResetSearch';
+export const PAGE_VIEW_SORT = 'pageViewSort';
+export const PAGE_VIEW_SELECTED = 'pageViewSelected';

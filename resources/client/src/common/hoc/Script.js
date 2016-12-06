@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {CheckArray} from '../helpers/check';
 
 function loopCallbackJs(i, files, self){
 	if(i < files.length){
@@ -40,8 +41,10 @@ const ScriptParams = (...params) => {
 			}
 			componentDidMount(){
 				const paramsCssJs = params[0];
-				loopCallbackCss(0, paramsCssJs.css, this);
-				loopCallbackJs(0, paramsCssJs.js, this);
+				if(CheckArray(paramsCssJs.css))
+					loopCallbackCss(0, paramsCssJs.css, this);
+				if(CheckArray(paramsCssJs.js))
+					loopCallbackJs(0, paramsCssJs.js, this);
 			}
 			render(){
 				const newProps = {

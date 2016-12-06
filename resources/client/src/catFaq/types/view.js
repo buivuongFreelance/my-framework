@@ -1,0 +1,9 @@
+export const CAT_FAQ_VIEW_LOAD_LIST = 'catFaqViewLoadList';
+export const CAT_FAQ_VIEW_CLEAR = 'catFaqViewClear';
+export const CAT_FAQ_VIEW_DETAIL = 'catFaqViewDetail';
+export const CAT_FAQ_VIEW_CHANGE_PAGE = 'catFaqViewChangePage';
+export const CAT_FAQ_VIEW_TOGGLE_SEARCH = 'catFaqViewToggleSearch';
+export const CAT_FAQ_VIEW_CHANGE_SEARCH = 'catFaqViewChangeSearch';
+export const CAT_FAQ_VIEW_RESET_SEARCH = 'catFaqViewResetSearch';
+export const CAT_FAQ_VIEW_SORT = 'catFaqViewSort';
+export const CAT_FAQ_VIEW_SELECTED = 'catFaqViewSelected';

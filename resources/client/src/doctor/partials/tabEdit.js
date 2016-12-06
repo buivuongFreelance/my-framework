@@ -26,7 +26,16 @@ class TabEdit extends Component{
 					})}> Edit Information</a>
 				</li>
 				<li ref="uploads">
-					<a> Other Images</a>
+					<a onClick={() => this.props.push({
+						pathname: Routes.backend.doctorEditImages,
+						query: {uid: this.props.uid}
+					})}> Other Images</a>
+				</li>
+				<li ref="qualifications">
+					<a onClick={() => this.props.push({
+						pathname: Routes.backend.doctorEditQualifications,
+						query: {uid: this.props.uid}
+					})}> Qualifications</a>
 				</li>
 			</ul>
 		);

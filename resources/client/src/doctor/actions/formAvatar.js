@@ -1,5 +1,6 @@
 import {
-	DOCTOR_FORM_AVATAR_CHANGE
+	DOCTOR_FORM_AVATAR_CHANGE,
+	DOCTOR_FORM_AVATAR_CLEAR
 } from '../types/formAvatar';
 
 import {THEME_NO_ACTION} from '../../theme/actions';
@@ -12,6 +13,13 @@ export const doctorFormAvatarChange = (field, value) => {
 	return {
 		type: DOCTOR_FORM_AVATAR_CHANGE,
 		payload: {field, value}
+	};
+};
+
+export const doctorFormAvatarClear = () => {
+	return {
+		type: DOCTOR_FORM_AVATAR_CLEAR,
+		payload: false
 	};
 };
 

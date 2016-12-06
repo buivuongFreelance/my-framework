@@ -32,26 +32,15 @@ class User extends Authenticatable
         //'password', 'remember_token',
     ];
 
-    public function scopeGetUserWithEmail($query, $email){
-        $query->where('email', $email)
-            ->where('role', 'client')
-            ->first();
-        return $query;
-    }
-
-    public function scopeGetClientWithEmail($query, $email){
-        $query->where('email', $email)
-            ->with('client')
-            ->where('role', 'client')
-            ->first();
-        return $query;
-    }
-
-    public function client(){
-        return $this->hasOne('App\Client', 'user_uid', 'uid');
-    }
-
     public function doctor(){
         return $this->hasOne('App\Doctor', 'user_uid', 'uid');
+    }
+
+    public function doctorsImages(){
+        return $this->hasMany('App\DoctorImage', 'user_uid', 'uid');
+    }
+
+    public function qualifications(){
+        return $this->hasMany('App\Qualification', 'user_uid', 'uid');
     }
 }

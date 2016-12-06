@@ -7,8 +7,8 @@ module.exports = {
     vendor: ['react', 'react-dom']
   },
   output: {
-    path: path.join(__dirname, '..', '..', 'public', 'js'),
-    publicPath: '/primaCare/public/js/',
+    path: path.join(__dirname, '..', '..', 'public', 'build'),
+    publicPath: '/primaCare/public/build/',
     filename: '[name].js',
     chunkFilename: '[name]-[chunkhash].js'
   },

@@ -31,22 +31,37 @@ class DoctorEdit extends Component{
 			_this.props.themeShowError(message);
 		});
 	}
+	componentWillUnmount(){
+		this.props.doctorFormAvatarClear();
+	}
 	_uploadAvatar(event){
 		event.preventDefault();
 		let _this = this;
-		let data = new FormData();
-		data.append('image', this.props.doctorFormAvatar.values.avatar);
-		data.append('uid', this.props.location.query.uid);
-		this.props.themeShowLoadingEl(this.refs.form);
-		this.props.doctorFormAvatarUpload(data)
-		.then(data => {
-			_this.props.themeHideLoadingEl(_this.refs.form);
-			_this.props.themeShowSuccess('Upload Doctor Avatar Successfully');
-			_this.props.push(Routes.backend.doctorList);
-		})
-		.catch(message => {
-			_this.props.themeHideLoadingEl(_this.refs.form);
-			_this.props.themeShowError(message);
+		const avatar = this.props.doctorFormAvatar.values.avatar;
+		if(avatar){
+			let data = new FormData();
+			data.append('image', avatar);
+			data.append('uid', this.props.location.query.uid);
+			this.props.themeShowLoadingEl(this.refs.form);
+			this.props.doctorFormAvatarUpload(data)
+			.then(data => {
+				_this.props.themeHideLoadingEl(_this.refs.form);
+				_this.props.themeShowSuccess('Upload Doctor Avatar Successfully');
+				_this._refreshPage();
+			})
+			.catch(message => {
+				_this.props.themeHideLoadingEl(_this.refs.form);
+				_this.props.themeShowError(message);
+			});
+		}else{
+			this.props.themeShowError('Please Select An Avatar');
+		}
+	}
+	_refreshPage(){
+		this.props.push(Routes.backend.main);
+		this.props.push({
+			pathname: Routes.backend.doctorEditAvatar,
+			query: {uid: this.props.location.query.uid}
 		});
 	}
 	render(){

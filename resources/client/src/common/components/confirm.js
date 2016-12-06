@@ -23,17 +23,20 @@ class ConfirmModal extends Component{
 	render(){
 		return (
 			<Modal
-				isOpen={false}
+				isOpen={this.props.modal}
 				className="Modal__Bootstrap modal-dialog modal-sm"
 				style={styles}
+				onRequestClose={this.props.onRequestClose}
           		closeTimeoutMS={150}>
 				<div className="modal-content">
 					<div className="modal-body">
-						<p>Do you want to sign out ?</p>
+						<p>{this.props.message}</p>
 					</div>
 					<div className="modal-footer">
-						<button type="button" className="btn btn-primary">Yes</button>
-						<button type="button" className="btn btn-default">No</button>
+						<button type="button" className="btn btn-primary"
+							onClick={this.props.onAccept}>Yes</button>
+						<button type="button" className="btn btn-default"
+							onClick={this.props.onRequestClose}>No</button>
 					</div>
 				</div>
 			</Modal>

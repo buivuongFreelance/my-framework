@@ -7,7 +7,7 @@ import JS from '../../common/config/js';
 
 import {DEFAULT_URL} from '../../common/config';
 
-class Datepicker extends Component{
+class ImageUpload extends Component{
 	constructor(){
 		super();
 		this.loaded = false;
@@ -20,6 +20,7 @@ class Datepicker extends Component{
 		}
 	}
 	componentWillUnmount(){
+		this.file = undefined;
 		this.loaded = false;
 	}
 	getImage(){
@@ -32,9 +33,6 @@ class Datepicker extends Component{
 			$(this.refs.file).on('change', () => {
 				_this.file = _this.refs.file.files[0];
 				_this.props.onChange(_this.file);
-				control.replaceWith(
-					control = control.clone(true)
-				);
 			});
 			this.loaded = true;
 		}
@@ -65,4 +63,4 @@ export default ScriptHOC(
 		css: [CSS.fileUpload],
 		js: [JS.fileUpload]
 	}
-)(Datepicker);
+)(ImageUpload);

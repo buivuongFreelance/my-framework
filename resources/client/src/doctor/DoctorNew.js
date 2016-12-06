@@ -5,12 +5,14 @@ import {bindActionCreators} from 'redux';
 import PageHead from '../app/PageHead';
 import Breadcrumb from '../app/Breadcrumb';
 import PageContent from '../app/PageContent';
-import Datepicker from '../common/components/datepicker';
+import Datepicker from '../common/components/birthday';
 
 import * as DoctorFormNewActions from './actions/formNew';
 import * as ThemeActions from '../theme/actions';
 import {routerActions} from 'react-router-redux';
 import Routes from '../common/config/routes';
+
+import {CheckString, CheckEmpty, CheckEmail} from '../common/helpers/check';
 
 class DoctorNew extends Component{
 	componentWillUnmount(){
@@ -21,11 +23,11 @@ class DoctorNew extends Component{
 			this.props.doctorFormNewFocus();
 	}
 	_onChangeField(field, event){
-		const value = (!is.string(event) && event) ? event.target.value : event;
+		const value = (!CheckString(event) && event) ? event.target.value : event;
 		let errors = Object.assign({}, this.props.doctorFormNew.errors);
 		switch(field){
 			case 'first_name':
-				if(!is.empty(value)){
+				if(!CheckEmpty(value)){
 					if(value.length < 2)
 						errors.first_name = 'Must At Least 2 Characters.';
 					else
@@ -34,7 +36,7 @@ class DoctorNew extends Component{
 					errors.first_name = '';
 				break;
 			case 'last_name':
-				if(is.empty(value)){
+				if(CheckEmpty(value)){
 					errors.last_name = 'Last Name Required.';
 				}else if(value.length < 2)
 					errors.last_name = 'Must At Least 2 Characters.';
@@ -43,7 +45,7 @@ class DoctorNew extends Component{
 				break;
 			case 'password':
 				const password_retype = this.props.doctorFormNew.values.password_retype;
-				if(is.empty(value))
+				if(CheckEmpty(value))
 					errors.password = 'Password Required.';
 				else if(value.length < 6)
 					errors.password = 'Must At Least 6 Characters.';
@@ -63,9 +65,9 @@ class DoctorNew extends Component{
 					errors.password_retype = '';
 				break;
 			case 'email':
-				if(is.empty(value))
+				if(CheckEmpty(value))
 					errors.email = 'Email Required';
-				else if(!is.email(value))
+				else if(!CheckEmail(value))
 					errors.email = 'Email Wrong !!!';
 				else
 					errors.email = '';

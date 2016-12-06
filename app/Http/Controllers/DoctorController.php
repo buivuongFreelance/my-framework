@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Doctor;
+use App\DoctorImage;
 use DB;
 use Hash;
 use Uuid;
@@ -13,9 +14,15 @@ use Validator;
 
 class DoctorController extends Controller
 {
+    public function doctorRemoveImage(Request $request){
+        $all = $request->all();
+
+        $doctorImage = DoctorImage::where('uid', $all['uid'])
+                ->delete();
+    }
     public function doctorUpAvatar(Request $request){
         try{
-            $path = $request->image->store('public/avatars');
+            $path = $request->image->store('public/doctor/avatars');
         }catch(\Exception $e){
             return response()->json(['message' => 'Cannot Upload Image'], 500);
         }
@@ -25,14 +32,47 @@ class DoctorController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    public function doctorUpImage(Request $request){
+        try{
+            $path = $request->image->store('public/doctor/images');
+        }catch(\Exception $e){
+            return response()->json(['message' => 'Cannot Upload Image'], 500);
+        }
+        $doctorImageUid = Uuid::generate();
+        $pathName = str_replace('public/', '', $path);
+        $doctorImage = new DoctorImage();
+        $doctorImage->uid = $doctorImageUid;
+        $doctorImage->user_uid = $request->uid;
+        $doctorImage->image = $pathName;
+        $doctorImage->save();
+        return response()->json(['message' => 'success']);
+    }
+
     public function doctorList(Request $request){
+        $all = $request->all();
         $doctors = User::where('status', 'active')
                 ->where('role', 'doctor')
+                ->where('email', 'like', '%'.$all['search']['email'].'%')
                 ->with('doctor')
+                ->whereHas('doctor', function($q) use($all){
+                    $q->where('first_name', 'like', '%'.$all['search']['first_name'].'%');
+                    $q->where('last_name', 'like', '%'.$all['search']['last_name'].'%');
+                })
+                ->offset($all['offset'])
+                ->limit($all['limit'])
                 ->orderBy('created_at', 'desc')
                 ->get();
 
-        return response()->json($doctors);
+        $doctorsCount = User::where('status', 'active')
+                ->where('role', 'doctor')
+                ->where('email', 'like', '%'.$all['search']['email'].'%')
+                ->whereHas('doctor', function($q) use($all){
+                    $q->where('first_name', 'like', '%'.$all['search']['first_name'].'%');
+                    $q->where('last_name', 'like', '%'.$all['search']['last_name'].'%');
+                })
+                ->count();
+
+        return response()->json(['list' => $doctors, 'all' => $doctorsCount]);
     }
 
     public function doctorDetail(Request $request){
@@ -42,6 +82,7 @@ class DoctorController extends Controller
                 ->where('role', 'doctor')
                 ->where('uid', $all['uid'])
                 ->with('doctor')
+                ->with('doctorsImages')
                 ->first();
 
         return response()->json($doctor);

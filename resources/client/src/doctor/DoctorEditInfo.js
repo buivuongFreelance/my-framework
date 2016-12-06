@@ -6,13 +6,15 @@ import PageHead from '../app/PageHead';
 import Breadcrumb from '../app/Breadcrumb';
 import PageContent from '../app/PageContent';
 import TabEdit from './partials/tabEdit';
-import Datepicker from '../common/components/datepicker';
+import Datepicker from '../common/components/birthday';
 
 import * as ThemeActions from '../theme/actions';
 import * as DoctorFormNewActions from './actions/formNew';
 import * as DoctorViewActions from './actions/view';
 import {routerActions} from 'react-router-redux';
 import Routes from '../common/config/routes';
+
+import {CheckString, CheckEmpty, CheckEmail} from '../common/helpers/check';
 
 class DoctorEditInfo extends Component{
 	componentDidMount(){
@@ -38,11 +40,11 @@ class DoctorEditInfo extends Component{
 			this.props.doctorFormNewFocus();
 	}
 	_onChangeField(field, event){
-		const value = (!is.string(event) && event) ? event.target.value : event;
+		const value = (!CheckString(event) && event) ? event.target.value : event;
 		let errors = Object.assign({}, this.props.doctorFormNew.errors);
 		switch(field){
 			case 'first_name':
-				if(!is.empty(value)){
+				if(!CheckEmpty(value)){
 					if(value.length < 2)
 						errors.first_name = 'Must At Least 2 Characters.';
 					else
@@ -51,7 +53,7 @@ class DoctorEditInfo extends Component{
 					errors.first_name = '';
 				break;
 			case 'last_name':
-				if(is.empty(value)){
+				if(CheckEmpty(value)){
 					errors.last_name = 'Last Name Required.';
 				}else if(value.length < 2)
 					errors.last_name = 'Must At Least 2 Characters.';
@@ -88,7 +90,7 @@ class DoctorEditInfo extends Component{
 				.then(data => {
 					_this.props.themeHideLoadingEl(_this.refs.form);
 					_this.props.themeShowSuccess(`Update Doctor ${_this.props.doctor.last_name} Successfully`);
-					_this.props.push(Routes.backend.doctorList);
+					_this._refreshPage();
 				})
 				.catch(message => {
 					_this.props.themeHideLoadingEl(_this.refs.form);
@@ -96,6 +98,13 @@ class DoctorEditInfo extends Component{
 				});
 			}
 		}, 0);
+	}
+	_refreshPage(){
+		this.props.push(Routes.backend.main);
+		this.props.push({
+			pathname: Routes.backend.doctorEditInfo,
+			query: {uid: this.props.location.query.uid}
+		});
 	}
 	render(){
 		const doctorName = `${this.props.doctor.first_name} ${this.props.doctor.last_name}`;

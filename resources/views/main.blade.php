@@ -9,6 +9,7 @@
 
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
 	<!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/font-awesome/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}">
@@ -19,20 +20,81 @@
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/css/components.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/css/plugins.min.css') }}">
 	<!-- END BEGIN THEME GLOBAL STYLES -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/pages/css/login.min.css') }}">
+	<!-- END BEGIN PAGE LEVEL STYLES -->
 	<!-- BEGIN THEME LAYOUT STYLES -->
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/layout.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/themes/default.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/layouts/layout3/css/custom.min.css') }}">
 	<!-- END BEGIN THEME LAYOUT STYLES -->
-	<!-- BEGIN PAGE LEVEL STYLES -->
-	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ URL::asset('metronic/assets/pages/css/login.min.css') }}">
-	<!-- END BEGIN PAGE LEVEL STYLES -->
 	<!--<link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}">-->
 	<style type="text/css">
 		/* MUST RE DOING JAVASCRIPT */
 		.page-content{
 			min-height: 692px;
+		}
+		.ReactModal__Overlay {
+			-webkit-perspective: 600;
+			perspective: 600;
+			opacity: 0;
+			overflow-x: hidden;
+			overflow-y: auto;
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		.ReactModal__Overlay--after-open {
+ 			opacity: 1;
+			transition: opacity 150ms ease-out;
+			}
+
+		.ReactModal__Content {
+			-webkit-transform: scale(0.5) rotateX(-30deg);
+			transform: scale(0.5) rotateX(-30deg);
+		}
+
+		.ReactModal__Content--after-open {
+			-webkit-transform: scale(1) rotateX(0deg);
+		 	transform: scale(1) rotateX(0deg);
+			transition: all 150ms ease-in;
+		}
+
+		.ReactModal__Overlay--before-close {
+  			opacity: 0;
+		}
+
+		.ReactModal__Content--before-close {
+			-webkit-transform: scale(0.5) rotateX(30deg);
+			transform: scale(0.5) rotateX(30deg);
+			transition: all 150ms ease-in;
+		}
+
+		.ReactModal__Content.modal-dialog {
+			border: none;
+			outline: none;
+			background-color: transparent;
+		}
+
+		.ReactModal__Body--open {
+			overflow: hidden;
+		}
+
+		.page-header .page-header-top .page-logo .logo-default{
+			margin-top: 5px;
+		}
+
+		.prima-btn{
+			background-color: #3fce92;
+			border: #3fce92;
+		}
+
+		.tp-section{
+			padding-top: 0!important;
+		}
+
+		.tp-navigation .navbar{
+			z-index: 0!important;
 		}
 	</style>
 	<!--<style type="text/css">
@@ -146,17 +208,16 @@
 	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
 	<!-- END BEGIN CORE PLUGINS -->
 	<!-- BEGIN THEME GLOBAL SCRIPTS -->
-	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/scripts/app.min.js') }}"></script>
+	<!--<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/scripts/app.min.js') }}"></script>-->
 	<!-- END BEGIN THEME GLOBAL SCRIPTS -->
 	<!-- BEGIN THEME LAYOUT SCRIPTS -->
-	<script type="text/javascript" src="{{ URL::asset('metronic/assets/layouts/layout3/scripts/layout.min.js') }}"></script>
+	<!--<script type="text/javascript" src="{{ URL::asset('metronic/assets/layouts/layout3/scripts/layout.min.js') }}"></script>-->
 	<!-- END BEGIN THEME LAYOUT SCRIPTS -->
 	<!-- BEGIN PAGE SCRIPTS -->
 	<script type="text/javascript" src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
 	<script type="text/javascript" src="{{ URL::asset('metronic/assets/pages/scripts/ui-blockui.min.js') }}"></script>
 	<!-- END BEGIN PAGE SCRIPTS -->
-    <script type="text/javascript" src="{{ URL::asset('js/is.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/init.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('build/init.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('build/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('build/bootstrap.js') }}"></script>
 </body>

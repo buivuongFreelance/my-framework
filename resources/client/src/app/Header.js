@@ -2,11 +2,19 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import ConfirmModal from '../common/components/confirm';
+
 import * as UserAuthActions from '../user/actions/auth';
 import {routerActions} from 'react-router-redux';
 import Routes from '../common/config/routes';
 
 class Header extends Component{
+	constructor(){
+		super();
+		this.state = {
+			confirm: false
+		}
+	}
 	_onLogout(){
 		this.props.userAuthRemoveToken();
 		this.props.userAuthSignOut();
@@ -26,18 +34,22 @@ class Header extends Component{
 	render(){
 		return (
 			<div className="page-header">
+				<ConfirmModal message="Do you really want leave backend?"
+					modal={this.state.confirm}
+					onAccept={this._onLogout.bind(this)}
+					onRequestClose={()=>this.setState({confirm: false})}/>
 				<div className="page-header-top">
 					<div className="container">
 						<div className="page-logo">
-							<a>
-								<img src="http://vignette2.wikia.nocookie.net/disney/images/3/34/Zootopia_logo.png/revision/latest/scale-to-width-down/150?cb=20160305024507" className="logo-default"/>
+							<a onClick={()=>this.props.push(Routes.backend.dashboard)}>
+								<img src="http://pmc.nextcare.com/wp-content/uploads/sites/10/2014/08/primacarelogo.png" width="220" height="60" className="logo-default"/>
 							</a>
 						</div>
 						<a href="javascript:;" className="menu-toggler"/>
 						<div className="top-menu">
 							<ul className="nav navbar-nav pull-right">
 								<li className="dropdown dropdown-user dropdown-dark">
-									<a onClick={this._onLogout.bind(this)}>
+									<a onClick={() => this.setState({confirm: true})}>
 										<i className="icon-logout"/>
 										&nbsp;
 										<span className="username">Logout</span>
@@ -57,9 +69,44 @@ class Header extends Component{
                     					Dashboard
 	                                </a>
                     			</li>
-                    			<li className="menu-dropdown">
+                    			<li>
+                    				<a onClick={()=>this.props.push(Routes.backend.siteView)}>
+                    					Site
+	                                </a>
+                    			</li>
+                    			<li>
+                    				<a onClick={()=>this.props.push(Routes.backend.slideshowList)}>
+                    					Slideshows
+	                                </a>
+                    			</li>
+                    			<li>
+                    				<a onClick={()=>this.props.push(Routes.backend.pageList)}>
+                    					Pages
+	                                </a>
+                    			</li>
+                    			<li className="menu-dropdown classic-menu-dropdown">
                     				<a onClick={()=>this.props.push(Routes.backend.doctorList)}>
                     					Doctors
+	                                </a>
+	                                {/*<ul className="dropdown-menu pull-left">
+	                                	<li>
+	                                		<a className="nav-link">Qualifications</a>
+	                                	</li>
+	                                </ul>*/}
+                    			</li>
+                    			<li>
+                    				<a onClick={()=>this.props.push(Routes.backend.serviceList)}>
+                    					Services
+	                                </a>
+                    			</li>
+                    			<li>
+                    				<a onClick={()=>this.props.push(Routes.backend.blogList)}>
+                    					Blogs
+	                                </a>
+                    			</li>
+                    			<li>
+                    				<a onClick={()=>this.props.push(Routes.backend.catFaqList)}>
+                    					FAQs Category
 	                                </a>
                     			</li>
                     		</ul>

@@ -1,0 +1,9 @@
+export const SLIDESHOW_VIEW_LOAD_LIST = 'slideshowViewLoadList';
+export const SLIDESHOW_VIEW_CLEAR = 'slideshowViewClear';
+export const SLIDESHOW_VIEW_DETAIL = 'slideshowViewDetail';
+export const SLIDESHOW_VIEW_CHANGE_PAGE = 'slideshowViewChangePage';
+export const SLIDESHOW_VIEW_TOGGLE_SEARCH = 'slideshowViewToggleSearch';
+export const SLIDESHOW_VIEW_CHANGE_SEARCH = 'slideshowViewChangeSearch';
+export const SLIDESHOW_VIEW_RESET_SEARCH = 'slideshowViewResetSearch';
+export const SLIDESHOW_VIEW_SORT = 'slideshowViewSort';
+export const SLIDESHOW_VIEW_SELECTED = 'slideshowViewSelected';

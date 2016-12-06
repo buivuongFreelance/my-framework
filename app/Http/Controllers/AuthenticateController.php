@@ -141,7 +141,7 @@ class AuthenticateController extends Controller
         if(!Hash::check($all['password'], $user->password))
             return response()->json(['message' => 'Your Password Wrong !!!'], 500);
         
-        $adminClaims = ['email'=>$user->email, 'name'=>$user->name, 'role'=>$user->role];
+        $adminClaims = ['email'=>$user->email, 'role'=>$user->role, 'uid'=>$user->uid];
         $credentials = ['email'=>$user->email, 'password'=>$all['password']];
 
         try {
